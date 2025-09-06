@@ -15,3 +15,17 @@ services:
       - CHOKIDAR_USEPOLLING=true
     tty: true
     command: ["npm", "run", "dev"]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "8080:3000"
+    environment:
+      - NODE_ENV=development
+    tty: true
+    command: ["node", "dist/main.js"] 
