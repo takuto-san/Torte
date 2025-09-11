@@ -46,3 +46,6 @@ docker-compose down
 
 Dockerイメージのビルドとコンテナの起動
 docker-compose up --build
+
+ビルドのみ
+docker-compose build backend
