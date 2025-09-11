@@ -1,0 +1,11 @@
+name: Backend CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'backend/**' 
+jobs:
+  # Todo: Backend CI/CDの実装

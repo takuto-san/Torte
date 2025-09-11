@@ -1,0 +1,117 @@
+name: Frontend CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'frontend/**' 
+
+# デフォルトの作業ディレクトリ変更
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  # 静的解析
+  Lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['23.x'] # 使用するNode.jsのバージョンを定義
+    # GitHub Actionsの権限設定
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+    # リポジトリからソースコードの取得
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+    
+    # Node.jsのセットアップ
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          # npmのキャッシュを使用する設定
+          cache: "npm"
+          # ルート直下の場合は「./package-lock.json」に変更
+          cache-dependency-path: ./frontend/package-lock.json
+     
+      # プロジェクトの依存関係をインストール
+      - name: Install Dependencies
+        run: npm ci
+
+      # ReviewdogをESLintで実行
+      - name: Run ESLint Reviewdog
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          eslint_flags: "src/**/*.{ts,tsx}"
+          # ルート直下の場合は不要
+          workdir: frontend/
+
+  # Frontend 単体テスト
+  Test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    needs: Lint
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+      - run: npm ci
+      - run: npm test
+
+  # Frontend ビルド
+  Build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: Test
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  # E2Eテスト（Todo）
+  # E2E:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: frontend
+  #   needs: Build
+  #   strategy:
+  #     matrix:
+  #       node-version: ['23.x']
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: "npm"
+  #         cache-dependency-path: ./frontend/package-lock.json
+  #     - run: npm ci
+  #     - run: npm run e2e
