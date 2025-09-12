@@ -54,7 +54,7 @@ jobs:
           workdir: frontend/
 
   # Frontend 単体テスト
-  Test:
+  UnitTest:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    needs: Test
+    needs: UnitTest
     strategy:
       matrix:
         node-version: ['23.x']
@@ -95,7 +95,7 @@ jobs:
       - run: npm run build
 
   # E2Eテスト（Todo）
-  # E2E:
+  # E2ETest:
   #   runs-on: ubuntu-latest
   #   defaults:
   #     run:
