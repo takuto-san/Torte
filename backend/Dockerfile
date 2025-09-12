@@ -3,9 +3,10 @@ FROM node:current-alpine
 WORKDIR /app
 
 COPY package*.json ./
-
 RUN npm install
 
-EXPOSE 3000
+COPY . .
+
+EXPOSE 8080
 
 CMD ["npm", "run", "start:dev"]

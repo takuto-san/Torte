@@ -8,4 +8,8 @@ on:
     paths:
       - 'backend/**' 
 jobs:
-  # Todo: Backend CI/CDの実装
+  dummy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Dummy job"
+# Todo: Backend CI/CDの実装
