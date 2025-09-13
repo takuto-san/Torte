@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as fs from 'fs';
-import { dump } from 'js-yaml';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,8 +13,8 @@ async function bootstrap() {
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(app, config);
-    fs.writeFileSync('./swagger-spec.yaml', dump(document, {}));     // main.tsと同じ階層でswagger-spec.yamlファイルとして出力する
-    SwaggerModule.setup('api/docs/', app, document);
+    fs.writeFileSync('./openapi.json', JSON.stringify(document, null, 2));
+    SwaggerModule.setup('api', app, document);
   }
   await app.listen(8080);
 }
