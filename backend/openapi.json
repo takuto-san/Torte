@@ -1,0 +1,44 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/hello": {
+      "get": {
+        "operationId": "AuthController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Test API Project",
+    "description": "Test API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {}
+  }
+}
