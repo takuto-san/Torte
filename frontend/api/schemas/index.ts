@@ -5,4 +5,3 @@
  * Test API description
  * OpenAPI spec version: 1.0
  */
-
