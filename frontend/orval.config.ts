@@ -6,8 +6,8 @@ export default defineConfig({
       target: "../backend/openapi.json", // OpenAPI のスキーマファイルのパス
     },
     output: {
-      target: "./api", // 生成するファイル群のパス
-      schemas: "./api/schemas", // スキーマファイルのパス
+      target: "./src/api", // 生成するファイル群のパス
+      schemas: "./src/api/schemas", // スキーマファイルのパス
       client: "react-query", // 生成するクライアントの種類
       httpClient: "fetch", // 生成する HTTP クライアントの種類
       mode: "tags-split", // 生成するファイルを分割するか
