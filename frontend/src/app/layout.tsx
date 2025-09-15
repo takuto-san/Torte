@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Redux & React Query
+// state management
 import StoreProvider from "@/stores/StoreProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient();
+import QueryProvider from "@/stores/QueryProvider";
 
 // Components
 import { Header } from "@components/templates/header/page";
@@ -33,12 +32,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <StoreProvider>
-        <QueryClientProvider client={queryClient}>
-          <Header />
-          {children}
-          <Footer />
-        </QueryClientProvider>
-      </StoreProvider>
+    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+        <StoreProvider>
+          <QueryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </QueryProvider>
+        </StoreProvider>
+      </body>
+    </html>
   );
 }
