@@ -61,5 +61,10 @@
       "prettier --write",
       "next lint --fix --dir src"
     ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

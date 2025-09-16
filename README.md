@@ -51,4 +51,4 @@ docker-compose up --build
 docker-compose build backend
 
 API仕様変更時
-npm run generate:apo
+npm run generate:api

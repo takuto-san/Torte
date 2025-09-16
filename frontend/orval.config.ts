@@ -19,7 +19,7 @@ export default defineConfig({
       },
       override: {
         mutator: {
-          path: "./src/lib/customFetch.ts", // カスタムfetchのパス
+          path: "./src/lib/mocks/customFetch.ts", // カスタムfetchのパス
           name: "customFetch",
         },
         fetch: {

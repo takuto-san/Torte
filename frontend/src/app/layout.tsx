@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// state management
-import StoreProvider from "@/stores/StoreProvider";
-import QueryProvider from "@/stores/QueryProvider";
+// Providers
+import { StoreProvider } from "@/lib/stores/StoreProvider";
+import { QueryProvider } from "@/lib/stores/QueryProvider";
+import { MswProvider } from "@/lib/mocks/MswProvider";
 
 // Components
 import { Header } from "@components/templates/header/page";
@@ -34,13 +35,15 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
-        <StoreProvider>
-          <QueryProvider>
-            <Header />
-            {children}
-            <Footer />
-          </QueryProvider>
-        </StoreProvider>
+        <MswProvider>
+          <StoreProvider>
+            <QueryProvider>
+              <Header />
+              {children}
+              <Footer />
+            </QueryProvider>
+          </StoreProvider>
+        </MswProvider>
       </body>
     </html>
   );
