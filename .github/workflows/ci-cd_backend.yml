@@ -55,26 +55,26 @@ jobs:
 
   # Backend 単体テスト（Todo: 各機能実装時に有効化）
   # 各モジュールに書いたspec または test をファイル名に含むテストファイルが実行される.詳細はjest.config.tsを参照
-  # UnitTest:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: backend
-  #   needs: Lint
-  #   strategy:
-  #     matrix:
-  #       node-version: ['23.x']
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #         cache-dependency-path: ./backend/package-lock.json
-  #     - run: npm ci
-  #     - run: npm test # Jestが「*.spec.ts」を自動実行
+  UnitTest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    needs: Lint
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./backend/package-lock.json
+      - run: npm ci
+      - run: npm test # Jestが「*.spec.ts」を自動実行
 
   # Backend ビルド
   Build:
@@ -97,23 +97,23 @@ jobs:
 
   # E2Eテスト（Todo）
   # e2eを含むテストファイルが実行される.詳細はjest.e2e.tsを参照
-  # E2ETest:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: backend
-  #   needs: Build
-  #   strategy:
-  #     matrix:
-  #       node-version: ['23.x']
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #         cache-dependency-path: ./backend/package-lock.json
-  #     - run: npm ci
-  #     - run: npm run e2e
+  E2ETest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    needs: Build
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./backend/package-lock.json
+      - run: npm ci
+      - run: npm run e2e
