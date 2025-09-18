@@ -5,7 +5,7 @@ import { StatsSection } from "@/components/organisms/stats-section/page";
 import { CtaSection } from "@/components/organisms/cta-section/page";
 import { Footer } from "@/components/organisms/footer/page";
 
-export default function Home() {
+export default function Top() {
   return (
     <>
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 text-gray-900">
