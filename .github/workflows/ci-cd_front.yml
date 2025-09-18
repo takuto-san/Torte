@@ -54,26 +54,26 @@ jobs:
           workdir: frontend/
 
   # Frontend 単体テスト（Todo）
-  # UnitTest:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: frontend
-  #   needs: Lint
-  #   strategy:
-  #     matrix:
-  #       node-version: ['23.x']
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #         cache-dependency-path: ./frontend/package-lock.json
-  #     - run: npm ci
-  #     - run: npm test
+  UnitTest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    needs: Lint
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+      - run: npm ci
+      - run: npm test
 
   # Frontend ビルド
   Build:
@@ -95,23 +95,23 @@ jobs:
       - run: npm run build
 
   # E2Eテスト（Todo）
-  # E2ETest:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: frontend
-  #   needs: Build
-  #   strategy:
-  #     matrix:
-  #       node-version: ['23.x']
-  #   permissions:
-  #     contents: read
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: "npm"
-  #         cache-dependency-path: ./frontend/package-lock.json
-  #     - run: npm ci
-  #     - run: npm run e2e
+  E2ETest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    needs: Build
+    strategy:
+      matrix:
+        node-version: ['23.x']
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+      - run: npm ci
+      - run: npm run e2e
