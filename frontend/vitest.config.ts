@@ -7,7 +7,7 @@ export default defineConfig({
     globals: true,
     exclude: [
     'node_modules',
-    'frontend/tests/**'
+    'tests/e2e',
     ],
    environment: 'happy-dom',
   },

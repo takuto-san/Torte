@@ -8,10 +8,6 @@ import { StoreProvider } from "@/lib/stores/StoreProvider";
 import { QueryProvider } from "@/lib/stores/QueryProvider";
 import { MswProvider } from "@/lib/mocks/MswProvider";
 
-// Components
-import { Header } from "@components/templates/header/page";
-import { Footer } from "@components/templates/footer/page"; // 使う場合のみ
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,14 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
+    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <MswProvider>
           <StoreProvider>
             <QueryProvider>
-              <Header />
               {children}
-              <Footer />
             </QueryProvider>
           </StoreProvider>
         </MswProvider>
