@@ -16,7 +16,7 @@ export const CtaSection: React.FC = () => (
     <p className="text-xl text-gray-600 mb-8">
       Join thousands who’ve already improved their health with MealMaster.
     </p>
-    <Link href="/auth/signup" className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-emerald-700 transition transform hover:scale-105">
+    <Link href="/home" className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-emerald-700 transition transform hover:scale-105">
       Start Free Trial
     </Link>
   </section>

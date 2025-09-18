@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../features//counts/counterSlice' 
+import counterReducer from './count/counterSlice' 
+import authReducer from './auth/authSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       counter: counterReducer,
+      auth: authReducer,
       // 他のreducerもここに追加
     },  
   })
