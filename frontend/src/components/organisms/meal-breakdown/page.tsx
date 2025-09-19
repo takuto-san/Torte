@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import type { MealBreakdownProps } from "@/types/propsTypes";
 import type { Meal, MealsByType } from '@/types/mealTypes';
@@ -36,7 +37,7 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                     className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
                   >
                     <div className="flex items-center space-x-3">
-                      <img
+                      <Image
                         src={meal.recipe.image}
                         alt={meal.recipe.name}
                         className="w-12 h-12 rounded-lg object-cover"
