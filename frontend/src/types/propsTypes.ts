@@ -1,3 +1,5 @@
+import type { MealsByType } from "./mealTypes";
+
 export type DailyOverviewProps = {
   selectedWeekday: string;
   setSelectedWeekday: (weekday: string) => void;
@@ -18,4 +20,14 @@ export type NutritionProgressProps = {
   goal: number;
   color: string;
   unit?: string;
+};
+
+export type MealBreakdownProps = {
+  mealsByType: MealsByType;
+  getMealTypeNutrition: (mealType: keyof MealsByType) => {
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
 };

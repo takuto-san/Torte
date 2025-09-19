@@ -40,3 +40,10 @@ export type MealsByType = {
   dinner: Meal[];
   snack: Meal[];
 };
+
+export type NutritionSummary = {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+};

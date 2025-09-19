@@ -3,7 +3,19 @@ import React, { useState, ChangeEvent, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getWeekday, getWeekdayFromDate, getTodayWeekday, weekDays } from "@/utils/dateUtils";
 import { DailyOverview } from "@/components/organisms/daily-overview/page";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
+import {
+  getMealsByWeekday,
+  getWeeklyNutrition,
+  getWeeklyChartData,
+  getTotalCalories,
+  getAverageCalories,
+  getStreak,
+  getGoalAchievement,
+  getDayMeals,
+  getMealsByType,
+  getMealTypeNutrition,
+} from "@/utils/nutrition";
 import {
   BarChart,
   Bar,
@@ -68,38 +80,11 @@ const NutritionTracker: FC = () => {
   const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday);
   const [showAddFood, setShowAddFood] = useState<boolean>(false);
 
-  // Group meals by weekday name
-  const mealsByWeekday: MealsByWeekday = mealPlan.reduce((acc: MealsByWeekday, meal: Meal) => {
-    const weekday = getWeekday(meal.date); // "Monday", etc.
-    const multiplier = meal.servings / meal.recipe.servings;
+  // const
+  const mealsByWeekday = getMealsByWeekday(mealPlan);
+  const dayNutrition = mealsByWeekday[selectedWeekday];
 
-    if (!acc[weekday]) {
-      acc[weekday] = {
-        calories: 0,
-        protein: 0,
-        carbs: 0,
-        fat: 0,
-        count: 0,
-      };
-    }
-
-    acc[weekday].calories += meal.recipe.nutrition.calories * multiplier;
-    acc[weekday].protein += meal.recipe.nutrition.protein * multiplier;
-    acc[weekday].carbs += meal.recipe.nutrition.carbs * multiplier;
-    acc[weekday].fat += meal.recipe.nutrition.fat * multiplier;
-    acc[weekday].count += 1;
-
-    return acc;
-  }, {});
-
-  const dayNutrition = mealsByWeekday[selectedWeekday] || {
-    calories: 0,
-    protein: 0,
-    carbs: 0,
-    fat: 0,
-    count: 0,
-  };
-
+  // Goals
   const calorieGoal = user?.dailyCalorieGoal ?? 2000;
   const proteinGoal = Math.round(
     (calorieGoal * (user?.macroGoals?.protein ?? 25)) / 100 / 4
@@ -111,68 +96,18 @@ const NutritionTracker: FC = () => {
     (calorieGoal * (user?.macroGoals?.fat ?? 25)) / 100 / 9
   );
 
-  const weeklyNutrition = weekDays.map((day) => ({
-    day,
-    nutrition: mealsByWeekday[day] || {
-      calories: 0,
-      protein: 0,
-      carbs: 0,
-      fat: 0,
-    },
-  }));
+  const weeklyNutrition = getWeeklyNutrition(weekDays, mealsByWeekday);
+  const weeklyChartData = getWeeklyChartData(weeklyNutrition);
 
-  // Convert weeklyNutrition to Recharts data
-  const weeklyChartData = weeklyNutrition.map((day) => ({
-    name: day.day.slice(0, 3),
-    calories: Math.round(day.nutrition.calories),
-  }));
+  const totalCalories = getTotalCalories(weeklyNutrition);
+  const avgCalories = getAverageCalories(weeklyNutrition);
+  const streak = getStreak(weeklyNutrition);
+  const goalAchievement = getGoalAchievement(weeklyNutrition, calorieGoal);
 
-  // Calculate weekly stats
-  const totalCalories = weeklyNutrition.reduce(
-    (sum, day) => sum + day.nutrition.calories,
-    0
-  );
-  const avgCalories = Math.round(totalCalories / 7);
-
-  // Streak: number of consecutive days with calorie entries
-  const streak = weeklyNutrition.reduceRight((count, day) => {
-    if (day.nutrition.calories > 0) return count + 1;
-    return count > 0 ? count : 0;
-  }, 0);
-
-  // Goal achievement: days where calories >= 90% of goal
-  const goalAchievementDays = weeklyNutrition.filter(
-    (day) => day.nutrition.calories >= calorieGoal * 0.9
-  ).length;
-  const goalAchievement = Math.round((goalAchievementDays / 7) * 100);
-
-  const dayMeals = mealPlan.filter(
-    (meal) => getWeekdayFromDate(meal.date) === selectedWeekday
-  );
-
-  const mealsByType: MealsByType = {
-    breakfast: dayMeals.filter((meal) => meal.mealType === "breakfast"),
-    lunch: dayMeals.filter((meal) => meal.mealType === "lunch"),
-    dinner: dayMeals.filter((meal) => meal.mealType === "dinner"),
-    snack: dayMeals.filter((meal) => meal.mealType === "snack"),
-  };
-
-  const getMealTypeNutrition = (mealType: keyof MealsByType) => {
-    const meals = mealsByType[mealType] || [];
-    return meals.reduce(
-      (total, meal) => {
-        const multiplier = meal.servings / meal.recipe.servings;
-        return {
-          calories:
-            total.calories + meal.recipe.nutrition.calories * multiplier,
-          protein: total.protein + meal.recipe.nutrition.protein * multiplier,
-          carbs: total.carbs + meal.recipe.nutrition.carbs * multiplier,
-          fat: total.fat + meal.recipe.nutrition.fat * multiplier,
-        };
-      },
-      { calories: 0, protein: 0, carbs: 0, fat: 0 }
-    );
-  };
+  const dayMeals = getDayMeals(mealPlan, selectedWeekday, getWeekdayFromDate);
+  const mealsByType = getMealsByType(dayMeals);
+  const getNutritionByMealType = (mealType: keyof MealsByType) =>
+    getMealTypeNutrition(mealsByType[mealType] || []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -200,76 +135,10 @@ const NutritionTracker: FC = () => {
             carbGoal={carbGoal}
           />
           {/* Meal Breakdown */}
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">
-              Meal Breakdown
-            </h2>
-            <div className="space-y-6">
-              {Object.entries(mealsByType).map(([mealType, meals]) => {
-                const mealNutrition = getMealTypeNutrition(mealType as keyof MealsByType);
-                return (
-                  <div
-                    key={mealType}
-                    className="border-b border-gray-100 pb-4 last:border-b-0"
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-medium text-gray-900 capitalize">
-                        {mealType}
-                      </h3>
-                      <span className="text-sm text-gray-500">
-                        {Math.round(mealNutrition.calories)} calories
-                      </span>
-                    </div>
-                    {/* 食事記録が存在するかどうか判定 */}
-                    {meals.length > 0 ? (
-                      <div className="space-y-2">
-                        {meals.map((meal, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <img
-                                src={meal.recipe.image}
-                                alt={meal.recipe.name}
-                                className="w-12 h-12 rounded-lg object-cover"
-                              />
-                              <div>
-                                <div className="font-medium text-gray-900">
-                                  {meal.recipe.name}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {meal.servings} serving(s)
-                                </div>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-medium text-gray-900">
-                                {Math.round(
-                                  (meal.recipe.nutrition.calories *
-                                    meal.servings) /
-                                    meal.recipe.servings
-                                )}
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                calories
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-4 text-gray-500">
-                        {/* Todo: 追加画面を実装する */}
-                        <AddCircleOutlineIcon className="h-8 w-8 mx-auto mb-2 text-gray-400" />
-                        <p>No {mealType} logged</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <MealBreakdown
+            mealsByType={mealsByType}
+            getMealTypeNutrition={getNutritionByMealType}
+          />
         </div>
 
         <div className="space-y-6">
