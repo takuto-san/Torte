@@ -31,3 +31,10 @@ export type MealBreakdownProps = {
     fat: number;
   };
 };
+
+export type WeeklyTrendsProps = {
+  weeklyChartData: { 
+    name: string; 
+    calories: number;
+  }[];
+};

@@ -1,9 +1,18 @@
 "use client";
 import React, { useState, ChangeEvent, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/lib/stores/store";
 import { getWeekday, getWeekdayFromDate, getTodayWeekday, weekDays } from "@/utils/dateUtils";
 import { DailyOverview } from "@/components/organisms/daily-overview/page";
 import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
+import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
+import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
+import type {
+  Meal,
+  MealsByWeekday,
+  MealsByType,
+  Recipe,
+} from '@/types/mealTypes';
 import {
   getMealsByWeekday,
   getWeeklyNutrition,
@@ -16,21 +25,6 @@ import {
   getMealsByType,
   getMealTypeNutrition,
 } from "@/utils/nutrition";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import type { RootState } from "@/lib/stores/store";
-import type {
-  Meal,
-  MealsByWeekday,
-  MealsByType,
-  Recipe,
-} from '@/types/mealTypes';
 
 // ダミーデータ
 const dummyRecipes: Recipe[] = [
@@ -122,7 +116,7 @@ const NutritionTracker: FC = () => {
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-        {/* Daily Overview */}
+          {/* Daily Overview */}
           <DailyOverview
             selectedWeekday={selectedWeekday}
             setSelectedWeekday={(day: string) => {
@@ -142,35 +136,9 @@ const NutritionTracker: FC = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Weekly Overview by Weekday
-            </h3>
-            <div className="space-y-3">
-              {weekDays.map((day) => (
-                <div key={day} className="flex items-center justify-between">
-                  <span className="text-gray-600">{day}</span>
-                  <span className="font-medium">
-                    {Math.round(mealsByWeekday[day]?.calories || 0)} cal
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Weekly Trends
-            </h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={weeklyChartData}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="calories" fill="#10B981" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          {/* Weekly Overview, Trends */}
+          <WeeklyOverview weekDays={weekDays} mealsByWeekday={mealsByWeekday} />
+          <WeeklyTrends weeklyChartData={weeklyChartData} />
         </div>
       </div>
     </div>
