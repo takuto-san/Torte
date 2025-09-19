@@ -1,15 +1,14 @@
 "use client";
-import React, { useState, ChangeEvent, FC } from "react";
+import React, { useState, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/lib/stores/store";
-import { getWeekday, getWeekdayFromDate, getTodayWeekday, weekDays } from "@/utils/dateUtils";
+import { getWeekdayFromDate, weekDays } from "@/utils/dateUtils";
 import { DailyOverview } from "@/components/organisms/daily-overview/page";
 import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
 import type {
   Meal,
-  MealsByWeekday,
   MealsByType,
   Recipe,
 } from '@/types/mealTypes';
