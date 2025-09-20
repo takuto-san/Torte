@@ -69,9 +69,7 @@ const dummyMealPlan: Meal[] = [
 const NutritionTracker: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const mealPlan = dummyMealPlan; // Todo: APIから取得できるようにする
-  const dispatch = useDispatch();
   const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday);
-  const [showAddFood, setShowAddFood] = useState<boolean>(false);
 
   // const
   const mealsByWeekday = getMealsByWeekday(mealPlan);
@@ -91,11 +89,6 @@ const NutritionTracker: FC = () => {
 
   const weeklyNutrition = getWeeklyNutrition(weekDays, mealsByWeekday);
   const weeklyChartData = getWeeklyChartData(weeklyNutrition);
-
-  const totalCalories = getTotalCalories(weeklyNutrition);
-  const avgCalories = getAverageCalories(weeklyNutrition);
-  const streak = getStreak(weeklyNutrition);
-  const goalAchievement = getGoalAchievement(weeklyNutrition, calorieGoal);
 
   const dayMeals = getDayMeals(mealPlan, selectedWeekday, getWeekdayFromDate);
   const mealsByType = getMealsByType(dayMeals);
