@@ -1,4 +1,5 @@
 import type { MealsByType } from "./mealTypes";
+import { ButtonProps } from "@mui/material/Button";
 
 export type DailyOverviewProps = {
   selectedWeekday: string;
@@ -38,3 +39,8 @@ export type WeeklyTrendsProps = {
     calories: number;
   }[];
 };
+
+export type LinkButtonProps = {
+  href: string;
+  children: React.ReactNode;
+} & ButtonProps;

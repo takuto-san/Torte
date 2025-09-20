@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
 import type { RootState } from "@/lib/stores/store";
 import { getWeekdayFromDate, weekDays } from "@/utils/dateUtils";
 import { DailyOverview } from "@/components/organisms/daily-overview/page";
@@ -16,10 +16,6 @@ import {
   getMealsByWeekday,
   getWeeklyNutrition,
   getWeeklyChartData,
-  getTotalCalories,
-  getAverageCalories,
-  getStreak,
-  getGoalAchievement,
   getDayMeals,
   getMealsByType,
   getMealTypeNutrition,
