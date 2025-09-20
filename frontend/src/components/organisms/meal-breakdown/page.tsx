@@ -38,9 +38,11 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                   >
                     <div className="flex items-center space-x-3">
                       <Image
-                        src={meal.recipe.image}
-                        alt={meal.recipe.name}
-                        className="w-12 h-12 rounded-lg object-cover"
+                        src="https://placehold.jp/150x150.png"
+                        alt="dummy"
+                        width={50}
+                        height={50}
+                        className="rounded-lg object-cover"
                       />
                       <div>
                         <div className="font-medium text-gray-900">
