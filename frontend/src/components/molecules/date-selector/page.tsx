@@ -2,7 +2,7 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { getTodayDate, getWeekdayJa } from '@/utils/dateUtils';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/lib/stores/store';
-import { incrementDay, decrementDay } from '@/lib/stores/date/dateSlice';
+import { incrementDay, decrementDay } from '@/lib/stores/utils/date/dateSlice';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
