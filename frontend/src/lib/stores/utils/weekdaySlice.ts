@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTodayWeekday } from '@/utils/dateUtils';
+import { getTodayWeekday } from '@/utils/date';
 
 interface WeekdayState {
   selectedWeekday: string;
