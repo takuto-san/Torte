@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import counterReducer from './count/counterSlice' 
 import authReducer from './auth/authSlice'
-import dateReducer from './utils/date/dateSlice'
-import weekdayReducer from './utils/weekday/weekdaySlice'
+import dateReducer from './utils/dateSlice'
+import weekdayReducer from './utils/weekdaySlice'
+import mealCategoryReducer from './meal/mealCategory Slice'
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
       auth: authReducer,
       date: dateReducer,
       weekday: weekdayReducer,
+      mealCategory: mealCategoryReducer,
       // 他のreducerもここに追加
     },  
   })

@@ -2,9 +2,10 @@ import type {
   Meal, 
   MealsByType, 
   MealsByWeekday,
-  NutritionSummary 
+  NutritionSummary,
+  MealCategory
 } from "@/types/mealTypes";
-import { getWeekday } from "@/utils/dateUtils";
+import { getWeekday } from "@/utils/date";
 
 // 曜日ごとの栄養素集計
 export function getMealsByWeekday(mealPlan: Meal[]): MealsByWeekday {

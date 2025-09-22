@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTodayDate } from '@/utils/dateUtils';
+import { getTodayDate } from '@/utils/date';
 import { DateObj, DateState } from '@/types/dateTypes';
 
 const initialState: DateState = {

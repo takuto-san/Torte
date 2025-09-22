@@ -12,6 +12,14 @@ export const weekDays = [
   "Sunday",
 ];
 
+export function getCurrentTime(): { hour: number; minute: number } {
+  const now = new Date();
+  return {
+    hour: now.getHours(),
+    minute: now.getMinutes(),
+  };
+}
+
 export function getTodayDate(): { year: number; month: number; day: number } {
   const today = new Date();
   return {
