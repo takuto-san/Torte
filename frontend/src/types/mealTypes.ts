@@ -47,3 +47,5 @@ export type NutritionSummary = {
   carbs: number;
   fat: number;
 };
+
+export type MealCategory = '朝食' | '昼食' | '夕食' | '間食' | "";

@@ -1,12 +1,13 @@
 "use client";
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/lib/stores/store";
-import { getWeekdayFromDate, weekDays } from "@/utils/dateUtils";
+import { getWeekdayFromDate, weekDays } from "@/utils/date";
 import { DailyOverview } from "@/components/organisms/daily-overview/page";
 import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
+import { setSelectedWeekday } from "@/lib/stores/utils/weekdaySlice";
 import type {
   Meal,
   MealsByType,
@@ -16,10 +17,6 @@ import {
   getMealsByWeekday,
   getWeeklyNutrition,
   getWeeklyChartData,
-  getTotalCalories,
-  getAverageCalories,
-  getStreak,
-  getGoalAchievement,
   getDayMeals,
   getMealsByType,
   getMealTypeNutrition,
@@ -70,7 +67,7 @@ const NutritionTracker: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const mealPlan = dummyMealPlan; // Todo: APIから取得できるようにする
   const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday);
-
+  const dispatch = useDispatch();
   // const
   const mealsByWeekday = getMealsByWeekday(mealPlan);
   const dayNutrition = mealsByWeekday[selectedWeekday];
@@ -112,7 +109,7 @@ const NutritionTracker: FC = () => {
           <DailyOverview
             selectedWeekday={selectedWeekday}
             setSelectedWeekday={(day: string) => {
-              // dispatch(setSelectedWeekday(day)); --- IGNORE ---
+              dispatch(setSelectedWeekday(day));
             }}
             weekDays={weekDays}
             dayNutrition={dayNutrition}
