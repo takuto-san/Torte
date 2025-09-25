@@ -1,16 +1,9 @@
-'use client'
-import { Header } from '@/components/organisms/header/page'
-import { DateSelector } from '@/components/molecules/date-selector/page'
-import { MealTypeSelector } from '@/components/molecules/meal-type-selector/page'
+import { RecordPageLayout } from '@/components/layouts/record/RecordPage'
 
-export default function RecordPage() {
+export default function Record() {
   return (
     <>
-      <div>
-        <Header />
-        <DateSelector />
-        <MealTypeSelector />
-      </div>
+      <RecordPageLayout />
     </>
   );
 }

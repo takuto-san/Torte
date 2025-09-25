@@ -4,6 +4,7 @@ import authReducer from './auth/authSlice'
 import dateReducer from './utils/dateSlice'
 import weekdayReducer from './utils/weekdaySlice'
 import mealCategoryReducer from './meal/mealCategory Slice'
+import loadingReducer from './loading/loadingSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -13,6 +14,7 @@ export const makeStore = () => {
       date: dateReducer,
       weekday: weekdayReducer,
       mealCategory: mealCategoryReducer,
+      loading: loadingReducer,
       // 他のreducerもここに追加
     },  
   })

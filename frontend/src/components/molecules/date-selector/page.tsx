@@ -1,5 +1,5 @@
 import { Box, IconButton, Typography } from '@mui/material';
-import { getTodayDate, getWeekdayJa } from '@/utils/date';
+import { getWeekdayJa } from '@/utils/date';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/lib/stores/store';
 import { incrementDay, decrementDay } from '@/lib/stores/utils/dateSlice';
