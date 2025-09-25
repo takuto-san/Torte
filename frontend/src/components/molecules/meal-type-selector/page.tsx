@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/lib/stores/store';
-import { setSelectedCategory } from '@/lib/stores/meal/mealCategory Slice';
+import { setSelectedCategory } from '@/lib/stores/meal/mealCategorySlice';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import WbTwilightIcon from '@mui/icons-material/WbTwilight';

@@ -3,8 +3,9 @@ import counterReducer from './count/counterSlice'
 import authReducer from './auth/authSlice'
 import dateReducer from './utils/dateSlice'
 import weekdayReducer from './utils/weekdaySlice'
-import mealCategoryReducer from './meal/mealCategory Slice'
+import mealCategoryReducer from './meal/mealCategorySlice'
 import loadingReducer from './loading/loadingSlice'
+import searchReducer from './input/search/searchSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
       weekday: weekdayReducer,
       mealCategory: mealCategoryReducer,
       loading: loadingReducer,
+      search: searchReducer,
       // 他のreducerもここに追加
     },  
   })
