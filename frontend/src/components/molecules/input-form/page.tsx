@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';
 import SearchIcon from '@mui/icons-material/Search';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import IconButton from '@mui/material/IconButton';
 
 export function InputForm() {
   const searchValue = useSelector((state: RootState) => state.search.value);
@@ -15,7 +17,6 @@ export function InputForm() {
     <Box
       display="flex"
       justifyContent="center"
-      minHeight="100vh"
       mt={3}
     >
       <TextField
@@ -34,6 +35,11 @@ export function InputForm() {
           },
         }}
       />
+      <Box ml={2}>
+        <IconButton>
+          <PhotoCameraIcon fontSize="large" />
+        </IconButton>
+      </Box>
     </Box>
   );
 }
