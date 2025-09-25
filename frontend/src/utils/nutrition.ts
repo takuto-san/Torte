@@ -3,7 +3,6 @@ import type {
   MealsByType, 
   MealsByWeekday,
   NutritionSummary,
-  MealCategory
 } from "@/types/mealTypes";
 import { getWeekday } from "@/utils/date";
 
