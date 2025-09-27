@@ -1,4 +1,4 @@
-import type { Meal, MealsByType } from "./mealTypes";
+import type { Food, Meal, MealsByType } from "./mealTypes";
 import { ButtonProps } from "@mui/material/Button";
 
 export type DailyOverviewProps = {

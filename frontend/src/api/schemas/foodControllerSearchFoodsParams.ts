@@ -6,4 +6,6 @@
  * OpenAPI spec version: 1.0
  */
 
-export * from "./foodControllerSearchFoodsParams";
+export type FoodControllerSearchFoodsParams = {
+  q: string;
+};
