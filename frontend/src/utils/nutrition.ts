@@ -4,13 +4,15 @@ import type {
   MealsByWeekday,
   NutritionSummary,
 } from "@/types/mealTypes";
-import { getWeekday } from "@/utils/date";
+import { getTodayWeekday, getWeekday, getTodayDate } from "@/utils/date";
 
 // 曜日ごとの栄養素集計
 export function getMealsByWeekday(mealPlan: Meal[]): MealsByWeekday {
   return mealPlan.reduce((acc: MealsByWeekday, meal: Meal) => {
-    const weekday = getWeekday(meal.date); // "Monday", etc.
-    const multiplier = meal.servings / meal.recipe.servings;
+    const dateObj = getTodayDate(); // { year, month, day }
+    const dateStr = `${dateObj.year}-${dateObj.month}-${dateObj.day}`;
+    const weekday = getWeekday(dateStr); // "Monday", etc.
+    const multiplier = meal.servings / meal.food.servings;
 
     if (!acc[weekday]) {
       acc[weekday] = {
@@ -22,10 +24,10 @@ export function getMealsByWeekday(mealPlan: Meal[]): MealsByWeekday {
       };
     }
 
-    acc[weekday].calories += meal.recipe.nutrition.calories * multiplier;
-    acc[weekday].protein += meal.recipe.nutrition.protein * multiplier;
-    acc[weekday].carbs += meal.recipe.nutrition.carbs * multiplier;
-    acc[weekday].fat += meal.recipe.nutrition.fat * multiplier;
+    acc[weekday].calories += meal.food.nutrition.calories * multiplier;
+    acc[weekday].protein += meal.food.nutrition.protein * multiplier;
+    acc[weekday].carbs += meal.food.nutrition.carbs * multiplier;
+    acc[weekday].fat += meal.food.nutrition.fat * multiplier;
     acc[weekday].count += 1;
 
     return acc;
@@ -85,9 +87,9 @@ export function getGoalAchievement(weeklyNutrition: { nutrition: { calories: num
 }
 
 // 曜日ごとの食事のフィルタ
-export function getDayMeals(mealPlan: Meal[], selectedWeekday: string, getWeekdayFromDate: (date: string) => string): Meal[] {
+export function getDayMeals(mealPlan: Meal[], selectedWeekday: string): Meal[] {
   return mealPlan.filter(
-    (meal) => getWeekdayFromDate(meal.date) === selectedWeekday
+    (meal) => getTodayWeekday() === selectedWeekday
   );
 }
 
@@ -105,12 +107,12 @@ export function getMealsByType(dayMeals: Meal[]): MealsByType {
 export function getMealTypeNutrition(meals: Meal[]): NutritionSummary {
   return meals.reduce(
     (total, meal) => {
-      const multiplier = meal.servings / meal.recipe.servings;
+      const multiplier = meal.servings / meal.food.servings;
       return {
-        calories: total.calories + meal.recipe.nutrition.calories * multiplier,
-        protein: total.protein + meal.recipe.nutrition.protein * multiplier,
-        carbs: total.carbs + meal.recipe.nutrition.carbs * multiplier,
-        fat: total.fat + meal.recipe.nutrition.fat * multiplier,
+        calories: total.calories + meal.food.nutrition.calories * multiplier,
+        protein: total.protein + meal.food.nutrition.protein * multiplier,
+        carbs: total.carbs + meal.food.nutrition.carbs * multiplier,
+        fat: total.fat + meal.food.nutrition.fat * multiplier,
       };
     },
     { calories: 0, protein: 0, carbs: 0, fat: 0 }

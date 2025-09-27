@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './count/counterSlice' 
-import authReducer from './auth/authSlice'
-import dateReducer from './utils/dateSlice'
-import weekdayReducer from './utils/weekdaySlice'
-import mealCategoryReducer from './meal/mealCategorySlice'
-import loadingReducer from './loading/loadingSlice'
-import searchReducer from './input/search/searchSlice'
-import tabReducer from './tab/tabSlice'
+import counterReducer from '@/stores/count/counterSlice' 
+import authReducer from '@/stores/auth/authSlice'
+import dateReducer from '@/stores/utils/dateSlice'
+import weekdayReducer from '@/stores/utils/weekdaySlice'
+import mealCategoryReducer from '@/stores/meal/mealCategorySlice'
+import loadingReducer from '@/stores/loading/loadingSlice'
+import searchReducer from '@/stores/input/search/searchSlice'
+import tabReducer from '@/stores/tab/tabSlice'
 
 export const makeStore = () => {
   return configureStore({

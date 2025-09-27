@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/lib/stores/store';
-import { setCurrentTab } from '@/lib/stores/tab/tabSlice';
+import { setCurrentTab } from '@/stores/tab/tabSlice';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Box } from '@mui/material';

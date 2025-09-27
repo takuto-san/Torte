@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Icon, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import type { MealBreakdownProps } from "@/types/propsTypes";
 import type { Meal, MealsByType } from '@/types/mealTypes';
@@ -46,7 +48,7 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                       />
                       <div>
                         <div className="font-medium text-gray-900">
-                          {meal.recipe.name}
+                          {meal.food.name}
                         </div>
                         <div className="text-sm text-gray-500">
                           {meal.servings} serving(s)
@@ -56,9 +58,9 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                     <div className="text-right">
                       <div className="font-medium text-gray-900">
                         {Math.round(
-                          (meal.recipe.nutrition.calories *
+                          (meal.food.nutrition.calories *
                             meal.servings) /
-                            meal.recipe.servings
+                            meal.food.servings
                         )}
                       </div>
                       <div className="text-sm text-gray-500">
@@ -70,8 +72,14 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
               </div>
             ) : (
               <div className="text-center py-4 text-gray-500">
-                {/* Todo: 追加画面を実装する */}
-                <AddCircleOutlineIcon className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                <IconButton
+                  component={Link}
+                  href="/record"
+                  aria-label={`Add ${mealType} meal`}
+                  className="mb-2"
+                >
+                  <AddCircleOutlineIcon className="h-8 w-8 mx-auto text-gray-400" />
+                </IconButton>
                 <p>No {mealType} logged</p>
               </div>
             )}

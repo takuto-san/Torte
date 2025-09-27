@@ -1,4 +1,4 @@
-import type { MealsByType } from "./mealTypes";
+import type { Meal, MealsByType } from "./mealTypes";
 import { ButtonProps } from "@mui/material/Button";
 
 export type DailyOverviewProps = {
@@ -44,3 +44,17 @@ export type LinkButtonProps = {
   href: string;
   children: React.ReactNode;
 } & ButtonProps;
+
+export type MealCardProps = {
+  meal: Meal;
+  isSelected: boolean;
+  onToggle: () => void;
+};
+
+export type TabsContentProps = {
+  id: number; 
+  searchQuery: string;
+  items: Meal[];
+  onToggle: (id: number) => void;
+  isSelectedFn: (id: number) => boolean;
+};

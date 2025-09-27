@@ -8,11 +8,11 @@ import { DailyOverview } from "@/components/organisms/daily-overview/page";
 import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
-import { setSelectedWeekday } from "@/lib/stores/utils/weekdaySlice";
+import { setSelectedWeekday } from "@/stores/utils/weekdaySlice";
 import type {
   Meal,
   MealsByType,
-  Recipe,
+  Food,
 } from '@/types/mealTypes';
 import {
   getMealsByWeekday,
@@ -24,9 +24,9 @@ import {
 } from "@/utils/nutrition";
 
 // ダミーデータ
-const dummyRecipes: Recipe[] = [
+const dummyRecipes: Food[] = [
   {
-    _id: "r1",
+    id: 1,
     name: "Dummy Curry",
     cuisine: "Japanese",
     dietaryTags: ["vegan"],
@@ -36,7 +36,7 @@ const dummyRecipes: Recipe[] = [
     image: "https://placehold.jp/150x150.png",
   },
   {
-    _id: "r2",
+    id: 2,
     name: "Dummy Salad",
     cuisine: "Western",
     dietaryTags: ["vegetarian"],
@@ -49,17 +49,15 @@ const dummyRecipes: Recipe[] = [
 
 const dummyMealPlan: Meal[] = [
   {
-    _id: "m1",
-    date: new Date().toISOString(),
+    id: 1,
     mealType: "breakfast",
-    recipe: dummyRecipes[0],
+    food: dummyRecipes[0],
     servings: 2,
   },
   {
-    _id: "m2",
-    date: new Date().toISOString(),
+    id: 2,
     mealType: "lunch",
-    recipe: dummyRecipes[1],
+    food: dummyRecipes[1],
     servings: 1,
   },
 ];
@@ -72,6 +70,8 @@ export const HomePageLayout: FC = () => {
 
   const mealsByWeekday = getMealsByWeekday(mealPlan);
   const dayNutrition = mealsByWeekday[selectedWeekday];
+  console.log("Meals By Weekday:", mealsByWeekday);
+  console.log("Day Nutrition:", dayNutrition);
 
   // Goals
   const calorieGoal = user?.dailyCalorieGoal ?? 2000;
@@ -88,7 +88,7 @@ export const HomePageLayout: FC = () => {
   const weeklyNutrition = getWeeklyNutrition(weekDays, mealsByWeekday);
   const weeklyChartData = getWeeklyChartData(weeklyNutrition);
 
-  const dayMeals = getDayMeals(mealPlan, selectedWeekday, getWeekdayFromDate);
+  const dayMeals = getDayMeals(mealPlan, selectedWeekday);
   const mealsByType = getMealsByType(dayMeals);
   const getNutritionByMealType = (mealType: keyof MealsByType) =>
     getMealTypeNutrition(mealsByType[mealType] || []);

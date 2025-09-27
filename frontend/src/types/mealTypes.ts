@@ -5,8 +5,8 @@ export type Nutrition = {
   fat: number;
 };
 
-export type Recipe = {
-  _id: string;
+export type Food = {
+  id: number;
   name: string;
   cuisine: string;
   dietaryTags: string[];
@@ -17,10 +17,9 @@ export type Recipe = {
 };
 
 export type Meal = {
-  _id: string;
-  date: string;
+  id: number;
   mealType: string;
-  recipe: Recipe;
+  food: Food;
   servings: number;
 };
 

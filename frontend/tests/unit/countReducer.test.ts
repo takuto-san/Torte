@@ -4,7 +4,7 @@ import countReducer, {
   decrement,
   incrementByAmount,
   CounterState
-} from '@/lib/stores/count/counterSlice';
+} from '@/stores/count/counterSlice';
 
 describe('countReducer', () => {
   const initialState: CounterState = { value: 0 };

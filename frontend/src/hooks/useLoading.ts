@@ -1,7 +1,7 @@
 "use client"
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { setLoading, unsetLoading } from "@/lib/stores/loading/loadingSlice";
+import { setLoading, unsetLoading } from "@/stores/loading/loadingSlice";
 
 export function useLoading() {
   const dispatch = useDispatch();
