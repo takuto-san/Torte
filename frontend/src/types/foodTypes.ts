@@ -14,6 +14,8 @@ export type Food = {
   nutrition: Nutrition;
   servings: number;
   image: string;
+  isRecorded: boolean; 
+  recordedCategories: MealCategory[]; 
 };
 
 export type Meal = {

@@ -1,7 +1,8 @@
+import { RootState } from "@/lib/stores/store";
+import { useSelector } from "react-redux";
 import { useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/lib/stores/store';
-import type { SearchParams } from '@/types/searchTypes';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const tabTypeMap: Record<number, string> = {
   0: 'select',
@@ -9,21 +10,23 @@ const tabTypeMap: Record<number, string> = {
   2: 'search',
 };
 
-export const useSearchQuery = (params: SearchParams) => {
+export const useSearchQuery = () => {
   const selectedTabId = useSelector((state: RootState) => state.tab.currentTab);
+  const selectedCategory = useSelector((state: RootState) => state.mealCategory.selectedCategory);
+  const searchValue = useSelector((state: RootState) => state.search.value);
   const tabName = tabTypeMap[selectedTabId];
 
   return useQuery({
-    queryKey: [tabName, params.query, params.category],
+    queryKey: [tabName, searchValue, selectedCategory],
     queryFn: async () => {
-      let endpoint = `/foods?tab=${tabName}`;
-      if (params.query) endpoint += `&q=${encodeURIComponent(params.query)}`;
-      if (params.category) endpoint += `&category=${encodeURIComponent(params.category)}`;
+      let endpoint = `${API_BASE_URL}/food/search?tab=${tabName}`;
+      if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;
+      if (selectedCategory) endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
 
       const res = await fetch(endpoint);
       if (!res.ok) throw new Error('API error');
       return res.json();
     },
-    enabled: !!params.query,
+    enabled: !!searchValue,
   });
 };

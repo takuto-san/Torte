@@ -45,10 +45,6 @@ export type LinkButtonProps = {
   children: React.ReactNode;
 } & ButtonProps;
 
-export type TabsContentProps = {
-  id: number; 
-};
-
 export type MealCardProps = {
   meal: Meal;
   isSelected: boolean;

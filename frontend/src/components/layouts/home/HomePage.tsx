@@ -9,6 +9,7 @@ import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
 import { setSelectedWeekday } from "@/stores/utils/weekdaySlice";
+import { dummyMeals } from "@/utils/dummy";
 import type {
   Meal,
   MealsByType,
@@ -23,48 +24,10 @@ import {
   getMealTypeNutrition,
 } from "@/utils/nutrition";
 
-// ダミーデータ
-const dummyRecipes: Food[] = [
-  {
-    id: 1,
-    name: "Dummy Curry",
-    cuisine: "Japanese",
-    dietaryTags: ["vegan"],
-    difficulty: "easy",
-    nutrition: { calories: 300, protein: 10, carbs: 50, fat: 5 },
-    servings: 2,
-    image: "https://placehold.jp/150x150.png",
-  },
-  {
-    id: 2,
-    name: "Dummy Salad",
-    cuisine: "Western",
-    dietaryTags: ["vegetarian"],
-    difficulty: "easy",
-    nutrition: { calories: 120, protein: 3, carbs: 20, fat: 4 },
-    servings: 1,
-    image: "https://placehold.jp/150x150.png",
-  },
-];
-
-const dummyMealPlan: Meal[] = [
-  {
-    id: 1,
-    mealType: "breakfast",
-    food: dummyRecipes[0],
-    servings: 2,
-  },
-  {
-    id: 2,
-    mealType: "lunch",
-    food: dummyRecipes[1],
-    servings: 1,
-  },
-];
 
 export const HomePageLayout: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const mealPlan = dummyMealPlan; // Todo: APIから取得できるようにする
+  const mealPlan = dummyMeals; // Todo: APIから取得できるようにする
   const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday);
   const dispatch = useDispatch();
 

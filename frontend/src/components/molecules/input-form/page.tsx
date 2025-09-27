@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/lib/stores/store';
-import { setSearchValue } from '@/stores/input/search/searchSlice';
+import { setSearchValue } from '@/stores/input/searchSlice';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';

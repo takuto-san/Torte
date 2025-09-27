@@ -5,7 +5,7 @@ import dateReducer from '@/stores/utils/dateSlice'
 import weekdayReducer from '@/stores/utils/weekdaySlice'
 import mealCategoryReducer from '@/stores/meal/mealCategorySlice'
 import loadingReducer from '@/stores/loading/loadingSlice'
-import searchReducer from '@/stores/input/search/searchSlice'
+import searchReducer from '@/stores/input/searchSlice'
 import tabReducer from '@/stores/tab/tabSlice'
 
 export const makeStore = () => {
