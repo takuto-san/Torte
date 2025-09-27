@@ -9,34 +9,35 @@ import SunnyIcon from '@mui/icons-material/Sunny';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import CoffeeIcon from '@mui/icons-material/Coffee';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { MealCategory } from '@/types/mealTypes';
+import { MealCategory } from '@/types/foodTypes';
 import { getCurrentTime } from '@/utils/date';
 
 // 時間帯から食事カテゴリを取得
 export function getMealCategory(): MealCategory {
   const { hour } = getCurrentTime();
-  if (hour >= 5 && hour < 11) return "朝食";
-  if (hour >= 11 && hour < 15) return "昼食";
-  if (hour >= 17 && hour < 22) return "夕食";
-  return "間食";
+  if (hour >= 5 && hour < 11) return "breakfast";
+  if (hour >= 11 && hour < 15) return "lunch";
+  if (hour >= 17 && hour < 22) return "dinner";
+  return "snack";
 }
 
 function getCategoryIcon(category: MealCategory) {
   switch (category) {
-    case '朝食':
+    case 'breakfast':
       return <WbTwilightIcon />;
-    case '昼食':
+    case 'lunch':
       return <SunnyIcon />;
-    case '夕食':
+    case 'dinner':
       return <BedtimeIcon />;
-    case '間食':
+    case 'snack':
       return <CoffeeIcon />;
     default:
       return null;
   }
 }
 
-const mealCategories: MealCategory[] = ['朝食', '昼食', '夕食', '間食'];
+const mealCategories: MealCategory[] = ['breakfast', 'lunch', 'dinner', 'snack'];
+const mealCategoryJa = { breakfast: '朝食', lunch: '昼食', dinner: '夕食', snack: '間食' };
 
 export const MealTypeSelector = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ export const MealTypeSelector = () => {
           },
         }}
       >
-        {selectedCategory}
+        {mealCategoryJa[selectedCategory]}
         <ArrowDropDownIcon sx={{ marginLeft: 1, marginRight: -1 }} />
       </Button>
     </Box>

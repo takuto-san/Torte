@@ -13,7 +13,7 @@ import type {
   Meal,
   MealsByType,
   Food,
-} from '@/types/mealTypes';
+} from '@/types/foodTypes';
 import {
   getMealsByWeekday,
   getWeeklyNutrition,

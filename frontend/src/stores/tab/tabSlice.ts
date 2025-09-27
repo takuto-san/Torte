@@ -5,7 +5,7 @@ interface TabState {
 }
 
 const initialState: TabState = {
-  currentTab: 0,
+  currentTab: 1,
 };
 
 const tabSlice = createSlice({

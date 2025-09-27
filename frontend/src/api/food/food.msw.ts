@@ -1,5 +1,5 @@
 import { HttpResponse, delay, http } from "msw";
-import { dummyFoods } from "@/utils/dummyFoods"; // ダミーデータをimport
+import { dummyFoods } from "@/utils/dummy"; 
 
 export const getFoodControllerSearchFoodsMockHandler = (
   overrideResponse?:

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Icon, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import type { MealBreakdownProps } from "@/types/propsTypes";
-import type { Meal, MealsByType } from '@/types/mealTypes';
+import type { Meal, MealsByType } from '@/types/foodTypes';
 
 export const MealBreakdown: React.FC<MealBreakdownProps> = ({
   mealsByType,

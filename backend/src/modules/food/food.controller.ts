@@ -1,16 +1,16 @@
 import {
-  Body,
   Controller,
-  Post,
   Get,
-} from '@nestjs/common';import { AppService } from './food.service';
+  Query,
+} from '@nestjs/common';
+import { FoodService } from './food.service';
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+@Controller('food')
+export class FoodController {
+  constructor(private readonly foodService: FoodService) {}
+  
+  @Get('search')
+  searchFoods(@Query('q') query: string) {
+    return this.foodService.searchFoods(query);
   }
 }

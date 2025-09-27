@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import type { MealsByWeekday } from "@/types/mealTypes";
+import type { MealsByWeekday } from "@/types/foodTypes";
 
 export const WeeklyOverview: FC<{ weekDays: string[]; mealsByWeekday: MealsByWeekday }> = ({
   weekDays,

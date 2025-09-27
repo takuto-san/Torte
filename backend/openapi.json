@@ -52,6 +52,29 @@
           "Users"
         ]
       }
+    },
+    "/food/search": {
+      "get": {
+        "operationId": "FoodController_searchFoods",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Food"
+        ]
+      }
     }
   },
   "info": {

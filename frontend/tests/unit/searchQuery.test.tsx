@@ -3,7 +3,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { makeStore, RootState } from "@/lib/stores/store"; // <- 関数と型のみimport
 import searchReducer, { setSearchValue } from "@/stores/input/search/searchSlice";
-import { dummyFoods } from "@/utils/dummyFoods";
+import { dummyFoods } from "@/utils/dummy";
 
 // テスト用storeを生成
 const store = makeStore();

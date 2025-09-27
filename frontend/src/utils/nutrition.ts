@@ -3,7 +3,7 @@ import type {
   MealsByType, 
   MealsByWeekday,
   NutritionSummary,
-} from "@/types/mealTypes";
+} from "@/types/foodTypes";
 import { getTodayWeekday, getWeekday, getTodayDate } from "@/utils/date";
 
 // 曜日ごとの栄養素集計

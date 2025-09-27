@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MealsByType, MealCategory } from '@/types/mealTypes';
+import { MealsByType, MealCategory } from '@/types/foodTypes';
 
 interface MealCategoryState {
   mealsByType: MealsByType;

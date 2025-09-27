@@ -47,4 +47,4 @@ export type NutritionSummary = {
   fat: number;
 };
 
-export type MealCategory = '朝食' | '昼食' | '夕食' | '間食' | "";
+export type MealCategory = 'breakfast' | 'lunch' | 'dinner' | 'snack' | "";
