@@ -5,5 +5,5 @@ export type DateObj = {
 }
 
 export type DateState = {
-  selectedDate: DateObj;
+  selectedDate: DateObj | undefined;
 }

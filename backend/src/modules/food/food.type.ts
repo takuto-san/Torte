@@ -5,6 +5,8 @@ export type Nutrition = {
   fat: number;
 };
 
+export type MealCategory = 'breakfast' | 'lunch' | 'dinner' | 'snack' | '';
+
 export type Food = {
   id: number;
   name: string;
@@ -14,4 +16,12 @@ export type Food = {
   nutrition: Nutrition;
   servings: number;
   image: string;
+  isRecorded: boolean; 
+  recordedCategories: MealCategory[]; 
+};
+
+export type SearchParams = {
+  tab: string;
+  query: string;
+  category?: string;
 };

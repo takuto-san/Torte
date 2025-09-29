@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTodayDate } from '@/utils/date';
 import { DateObj, DateState } from '@/types/dateTypes';
 
 const initialState: DateState = {
-  selectedDate: getTodayDate(),
+  selectedDate: undefined,
 };
 
 function dateObjToDate(d: DateObj): Date {
@@ -26,11 +25,13 @@ export const dateSlice = createSlice({
       state.selectedDate = action.payload;
     },
     incrementDay: (state) => {
+      if (!state.selectedDate) return;
       const date = dateObjToDate(state.selectedDate);
       date.setDate(date.getDate() + 1);
       state.selectedDate = dateToDateObj(date);
     },
     decrementDay: (state) => {
+      if (!state.selectedDate) return;
       const date = dateObjToDate(state.selectedDate);
       date.setDate(date.getDate() - 1);
       state.selectedDate = dateToDateObj(date);
