@@ -5,7 +5,7 @@ interface WeekdayState {
   selectedWeekday: string;
 }
 
-const initialState: WeekdayState = {
+export const initialState: WeekdayState = {
   selectedWeekday: getTodayWeekday(),
 };
 

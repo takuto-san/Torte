@@ -6,7 +6,7 @@ interface MealCategoryState {
   selectedCategory: MealCategory;
 }
 
-const initialState: MealCategoryState = {
+export const initialState: MealCategoryState = {
   mealsByType: {
     breakfast: [],
     lunch: [],

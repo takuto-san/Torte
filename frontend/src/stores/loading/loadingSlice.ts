@@ -4,7 +4,7 @@ interface LoadingState {
   isLoading: boolean;
 }
 
-const initialState: LoadingState = {
+export const initialState: LoadingState = {
   isLoading: false,
 };
 

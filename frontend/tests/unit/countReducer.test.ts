@@ -7,7 +7,7 @@ import countReducer, {
 } from '@/stores/count/counterSlice';
 
 describe('countReducer', () => {
-  const initialState: CounterState = { value: 0 };
+  export const initialState: CounterState = { value: 0 };
 
   it('should return the initial state', () => {
     expect(countReducer(undefined, { type: '' })).toEqual(initialState);

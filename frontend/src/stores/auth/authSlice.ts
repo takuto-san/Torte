@@ -18,7 +18,7 @@ const dummyUser: User = {
 }
 
 // 初期状態（ダミーユーザーでログイン済みとする）
-const initialState: AuthState = {
+export const initialState: AuthState = {
   user: dummyUser,
   loading: false,
 }

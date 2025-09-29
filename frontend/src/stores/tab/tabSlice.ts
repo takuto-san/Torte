@@ -4,7 +4,7 @@ interface TabState {
   currentTab: number;
 }
 
-const initialState: TabState = {
+export const initialState: TabState = {
   currentTab: 1,
 };
 

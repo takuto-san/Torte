@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DateObj, DateState } from '@/types/dateTypes';
 
-const initialState: DateState = {
+export const initialState: DateState = {
   selectedDate: undefined,
 };
 

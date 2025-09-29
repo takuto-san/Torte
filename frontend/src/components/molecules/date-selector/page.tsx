@@ -10,6 +10,21 @@ export const DateSelector = () => {
   const dispatch = useDispatch();
   const selectedDate = useSelector((state: RootState) => state.date.selectedDate);
 
+  if (!selectedDate) {
+    return (
+      <div className="py-2">
+        <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+          <IconButton disabled>
+            <ArrowBackIosNewIcon />
+          </IconButton>
+          <Typography variant="h6">--/-- (--)</Typography>
+          <IconButton disabled>
+            <ArrowForwardIosIcon />
+          </IconButton>
+        </Box>
+      </div>
+    );
+  }
   return (
     <div className="py-2">
       <Box display="flex" alignItems="center" justifyContent="center" gap={2}>

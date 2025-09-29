@@ -1,14 +1,12 @@
 "use client"
 import React from 'react';
 import { LinkButton } from '@/components/atoms/link-button/page';
-import { useInitDate } from '@/hooks/useInitDate';
 
 export const HomeLayoutWrapper = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  useInitDate();
 
   return (
     <div>
