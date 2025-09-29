@@ -16,8 +16,8 @@ export type Food = {
   nutrition: Nutrition;
   servings: number;
   image: string;
-  isRecorded: boolean; 
-  recordedCategories: MealCategory[]; 
+  isRecorded: boolean;
+  recordedCategories: MealCategory[];
 };
 
 export type SearchParams = {

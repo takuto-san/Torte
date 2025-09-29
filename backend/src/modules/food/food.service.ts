@@ -8,24 +8,25 @@ export class FoodService {
     let foods = dummyFoods;
 
     if (params.query) {
-      foods = foods.filter(food =>
-        food.name.toLowerCase().includes(params.query.toLowerCase())
+      foods = foods.filter((food) =>
+        food.name.toLowerCase().includes(params.query.toLowerCase()),
       );
     }
 
     if (params.category && params.category !== '') {
-      foods = foods.filter(food =>
-        Array.isArray(food.recordedCategories) &&
-        food.recordedCategories.includes(params.category as MealCategory)
+      foods = foods.filter(
+        (food) =>
+          Array.isArray(food.recordedCategories) &&
+          food.recordedCategories.includes(params.category as MealCategory),
       );
     }
 
     switch (params.tab) {
       case 'history':
-        foods = foods.filter(food => food.isRecorded === true);
+        foods = foods.filter((food) => food.isRecorded === true);
         break;
       case 'select':
-        foods = foods.filter(food => food.isRecorded === false);
+        foods = foods.filter((food) => food.isRecorded === false);
         break;
       case 'search':
         break;

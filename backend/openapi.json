@@ -10,9 +10,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/login": {
@@ -24,9 +22,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/users/{id}": {
@@ -48,9 +44,7 @@
           }
         },
         "summary": "Get user by ID",
-        "tags": [
-          "Users"
-        ]
+        "tags": ["Users"]
       }
     },
     "/food/search": {
@@ -71,9 +65,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Food"
-        ]
+        "tags": ["Food"]
       }
     }
   },
