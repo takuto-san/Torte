@@ -14,10 +14,12 @@ export const useSearchQuery = () => {
   const selectedTabId = useSelector((state: RootState) => state.tab.currentTab);
   const selectedCategory = useSelector((state: RootState) => state.mealCategory.selectedCategory);
   const searchValue = useSelector((state: RootState) => state.search.value);
+
   const tabName = tabTypeMap[selectedTabId];
+  const queryKey = [tabName, searchValue, selectedCategory];
 
   return useQuery({
-    queryKey: [tabName, searchValue, selectedCategory],
+    queryKey,
     queryFn: async () => {
       let endpoint = `${API_BASE_URL}/food/search?tab=${tabName}`;
       if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;

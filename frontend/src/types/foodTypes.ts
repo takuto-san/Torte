@@ -1,3 +1,29 @@
+import { Weekday } from './dateTypes';
+
+// 1週間の食事
+export type WeeklyMeals = {
+  [weekday in Weekday]: DailyMeals;
+};
+
+// 1日の食事
+export type DailyMeals = {
+  [category in MealCategory]: {
+    meals: Meal[];
+    totalNutrition: Nutrition;
+  };
+};
+
+// 食事カテゴリ
+export type MealCategory = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+
+// カテゴリごとの食事
+export type Meal = {
+  mealType: MealCategory;
+  foods: Food[];
+  totalNutrition: Nutrition;
+};
+
+// 栄養情報
 export type Nutrition = {
   calories: number;
   protein: number;
@@ -5,48 +31,11 @@ export type Nutrition = {
   fat: number;
 };
 
+// 食品情報
 export type Food = {
   id: number;
   name: string;
-  cuisine: string;
-  dietaryTags: string[];
-  difficulty: string;
   nutrition: Nutrition;
-  servings: number;
   image: string;
-  isRecorded: boolean; 
   recordedCategories: MealCategory[]; 
 };
-
-export type Meal = {
-  id: number;
-  mealType: string;
-  food: Food;
-  servings: number;
-};
-
-export type MealsByWeekday = {
-  [weekday: string]: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    count: number;
-  };
-};
-
-export type MealsByType = {
-  breakfast: Meal[];
-  lunch: Meal[];
-  dinner: Meal[];
-  snack: Meal[];
-};
-
-export type NutritionSummary = {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-};
-
-export type MealCategory = 'breakfast' | 'lunch' | 'dinner' | 'snack' | "";

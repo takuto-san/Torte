@@ -1,8 +1,8 @@
-import { DateObj } from "@/types/dateTypes";
+import { DateObj, Weekday } from "@/types/dateTypes";
 
 export const weekDaysJa = ["日", "月", "火", "水", "木", "金", "土"];
 
-export const weekDays = [
+export const weekDays: Weekday[] = [
   "Monday",
   "Tuesday",
   "Wednesday",
@@ -34,15 +34,28 @@ export function getWeekdayJa(date?: DateObj): string {
   return weekDaysJa[d.getDay()];
 }
 
-export const getTodayWeekday = () =>
-  new Date().toLocaleDateString("en-US", { weekday: "long" });
-
-export const getWeekday = (dateStr: string) => {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", { weekday: "long" });
+export const getTodayWeekday = (): Weekday => {
+  const weekday = new Date().toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  if (weekDays.includes(weekday)) {
+    return weekday;
+  }
+  throw new Error("Invalid weekday");
 };
 
-export const getWeekdayFromDate = (dateString: string) => {
+export const getWeekday = (dateStr: string): Weekday => {
+  const date = new Date(dateStr);
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  if (weekDays.includes(weekday)) {
+    return weekday;
+  }
+  throw new Error("Invalid weekday");
+};
+
+export const getWeekdayFromDate = (dateString: string): Weekday => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { weekday: "long" });
+  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  if (weekDays.includes(weekday)) {
+    return weekday;
+  }
+  throw new Error("Invalid weekday");
 };

@@ -1,255 +1,154 @@
-import { Food, Meal } from '@/types/foodTypes'; 
+import { Food, Meal, Nutrition, MealCategory } from '@/types/foodTypes';
 
+// Food型（最終スキーマ準拠）
 export const dummyFoods: Food[] = [
   {
     id: 1,
     name: "Spaghetti Carbonara",
-    cuisine: "Italian",
-    dietaryTags: ["gluten"],
-    difficulty: "medium",
-    nutrition: { calories: 650, protein: 22, fat: 24, carbs: 80 },
-    servings: 2,
+    nutrition: { calories: 650, protein: 22, carbs: 80, fat: 24 },
     image: "carbonara.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 2,
     name: "Vegetable Stir Fry",
-    cuisine: "Chinese",
-    dietaryTags: ["vegan", "gluten-free"],
-    difficulty: "easy",
-    nutrition: { calories: 350, protein: 10, fat: 8, carbs: 60 },
-    servings: 3,
+    nutrition: { calories: 350, protein: 10, carbs: 60, fat: 8 },
     image: "stirfry.jpg",
-    isRecorded: true,
     recordedCategories: ["lunch", "dinner"]
   },
   {
     id: 3,
     name: "Chicken Tikka Masala",
-    cuisine: "Indian",
-    dietaryTags: ["high-protein"],
-    difficulty: "hard",
-    nutrition: { calories: 720, protein: 40, fat: 32, carbs: 55 },
-    servings: 4,
+    nutrition: { calories: 720, protein: 40, carbs: 55, fat: 32 },
     image: "tikka.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 4,
     name: "Sushi Platter",
-    cuisine: "Japanese",
-    dietaryTags: ["seafood"],
-    difficulty: "hard",
-    nutrition: { calories: 500, protein: 30, fat: 10, carbs: 70 },
-    servings: 2,
+    nutrition: { calories: 500, protein: 30, carbs: 70, fat: 10 },
     image: "sushi.jpg",
-    isRecorded: true,
     recordedCategories: ["lunch"]
   },
   {
     id: 5,
     name: "Falafel Bowl",
-    cuisine: "Middle Eastern",
-    dietaryTags: ["vegan", "gluten-free"],
-    difficulty: "medium",
-    nutrition: { calories: 450, protein: 18, fat: 16, carbs: 65 },
-    servings: 2,
+    nutrition: { calories: 450, protein: 18, carbs: 65, fat: 16 },
     image: "falafel.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 6,
     name: "Beef Tacos",
-    cuisine: "Mexican",
-    dietaryTags: ["dairy-free"],
-    difficulty: "easy",
-    nutrition: { calories: 600, protein: 28, fat: 20, carbs: 75 },
-    servings: 3,
+    nutrition: { calories: 600, protein: 28, carbs: 75, fat: 20 },
     image: "tacos.jpg",
-    isRecorded: true,
     recordedCategories: ["dinner"]
   },
   {
     id: 7,
     name: "Greek Salad",
-    cuisine: "Greek",
-    dietaryTags: ["vegetarian", "gluten-free"],
-    difficulty: "easy",
-    nutrition: { calories: 220, protein: 6, fat: 14, carbs: 15 },
-    servings: 2,
+    nutrition: { calories: 220, protein: 6, carbs: 15, fat: 14 },
     image: "greek_salad.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 8,
     name: "Pad Thai",
-    cuisine: "Thai",
-    dietaryTags: ["peanut"],
-    difficulty: "medium",
-    nutrition: { calories: 700, protein: 25, fat: 28, carbs: 90 },
-    servings: 2,
+    nutrition: { calories: 700, protein: 25, carbs: 90, fat: 28 },
     image: "padthai.jpg",
-    isRecorded: true,
     recordedCategories: ["dinner"]
   },
   {
     id: 9,
     name: "Quinoa Bowl",
-    cuisine: "American",
-    dietaryTags: ["vegan", "gluten-free"],
-    difficulty: "easy",
-    nutrition: { calories: 390, protein: 12, fat: 10, carbs: 65 },
-    servings: 1,
+    nutrition: { calories: 390, protein: 12, carbs: 65, fat: 10 },
     image: "quinoa.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 10,
     name: "Croque Monsieur",
-    cuisine: "French",
-    dietaryTags: ["dairy"],
-    difficulty: "medium",
-    nutrition: { calories: 520, protein: 20, fat: 28, carbs: 60 },
-    servings: 2,
+    nutrition: { calories: 520, protein: 20, carbs: 60, fat: 28 },
     image: "croque.jpg",
-    isRecorded: true,
     recordedCategories: ["breakfast"]
   },
   {
     id: 11,
     name: "Bibimbap",
-    cuisine: "Korean",
-    dietaryTags: ["vegetarian"],
-    difficulty: "medium",
-    nutrition: { calories: 480, protein: 14, fat: 10, carbs: 80 },
-    servings: 2,
+    nutrition: { calories: 480, protein: 14, carbs: 80, fat: 10 },
     image: "bibimbap.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 12,
     name: "Fish and Chips",
-    cuisine: "British",
-    dietaryTags: ["seafood"],
-    difficulty: "medium",
-    nutrition: { calories: 800, protein: 32, fat: 40, carbs: 85 },
-    servings: 2,
+    nutrition: { calories: 800, protein: 32, carbs: 85, fat: 40 },
     image: "fishchips.jpg",
-    isRecorded: true,
     recordedCategories: ["lunch", "dinner"]
   },
   {
     id: 13,
     name: "Shakshuka",
-    cuisine: "Middle Eastern",
-    dietaryTags: ["vegetarian", "gluten-free"],
-    difficulty: "easy",
-    nutrition: { calories: 300, protein: 12, fat: 14, carbs: 28 },
-    servings: 2,
+    nutrition: { calories: 300, protein: 12, carbs: 28, fat: 14 },
     image: "shakshuka.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 14,
     name: "Pancakes",
-    cuisine: "American",
-    dietaryTags: ["vegetarian"],
-    difficulty: "easy",
-    nutrition: { calories: 400, protein: 8, fat: 10, carbs: 72 },
-    servings: 2,
+    nutrition: { calories: 400, protein: 8, carbs: 72, fat: 10 },
     image: "pancakes.jpg",
-    isRecorded: true,
     recordedCategories: ["breakfast"]
   },
   {
     id: 15,
     name: "Ratatouille",
-    cuisine: "French",
-    dietaryTags: ["vegan", "gluten-free"],
-    difficulty: "medium",
-    nutrition: { calories: 180, protein: 4, fat: 8, carbs: 20 },
-    servings: 2,
+    nutrition: { calories: 180, protein: 4, carbs: 20, fat: 8 },
     image: "ratatouille.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 16,
     name: "Tom Yum Soup",
-    cuisine: "Thai",
-    dietaryTags: ["seafood", "gluten-free"],
-    difficulty: "medium",
-    nutrition: { calories: 260, protein: 12, fat: 6, carbs: 32 },
-    servings: 2,
+    nutrition: { calories: 260, protein: 12, carbs: 32, fat: 6 },
     image: "tomyum.jpg",
-    isRecorded: true,
     recordedCategories: ["lunch"]
   },
   {
     id: 17,
     name: "Egg Fried Rice",
-    cuisine: "Chinese",
-    dietaryTags: ["vegetarian"],
-    difficulty: "easy",
-    nutrition: { calories: 440, protein: 10, fat: 16, carbs: 68 },
-    servings: 2,
+    nutrition: { calories: 440, protein: 10, carbs: 68, fat: 16 },
     image: "friedrice.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 18,
     name: "Caprese Salad",
-    cuisine: "Italian",
-    dietaryTags: ["vegetarian", "gluten-free"],
-    difficulty: "easy",
-    nutrition: { calories: 250, protein: 8, fat: 16, carbs: 10 },
-    servings: 2,
+    nutrition: { calories: 250, protein: 8, carbs: 10, fat: 16 },
     image: "caprese.jpg",
-    isRecorded: true,
     recordedCategories: ["lunch"]
   },
   {
     id: 19,
     name: "Huevos Rancheros",
-    cuisine: "Mexican",
-    dietaryTags: ["vegetarian", "gluten-free"],
-    difficulty: "medium",
-    nutrition: { calories: 390, protein: 14, fat: 18, carbs: 38 },
-    servings: 2,
+    nutrition: { calories: 390, protein: 14, carbs: 38, fat: 18 },
     image: "huevos.jpg",
-    isRecorded: false,
     recordedCategories: []
   },
   {
     id: 20,
     name: "Butter Chicken",
-    cuisine: "Indian",
-    dietaryTags: ["high-protein", "dairy"],
-    difficulty: "hard",
-    nutrition: { calories: 850, protein: 45, fat: 45, carbs: 65 },
-    servings: 4,
+    nutrition: { calories: 850, protein: 45, carbs: 65, fat: 45 },
     image: "butterchicken.jpg",
-    isRecorded: true,
     recordedCategories: ["dinner"]
   }
 ];
 
-const mealTypes: Array<'breakfast' | 'lunch' | 'dinner' | 'snack'> = [
-  'breakfast', 'lunch', 'dinner', 'snack'
-];
+// Meal型（最終スキーマ準拠）
+const mealTypes: MealCategory[] = ['breakfast', 'lunch', 'dinner', 'snack'];
 
 export const dummyMeals: Meal[] = dummyFoods.map((food, idx) => ({
-  id: idx + 1,
   mealType: mealTypes[idx % mealTypes.length],
-  food: food,
-  servings: food.servings,
+  foods: [food],
+  totalNutrition: { ...food.nutrition }
 }));

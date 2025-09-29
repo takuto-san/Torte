@@ -9,50 +9,29 @@ import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
 import { setSelectedWeekday } from "@/stores/utils/weekdaySlice";
-import { dummyMeals } from "@/utils/dummy";
-import type {
-  MealsByType,
-} from '@/types/foodTypes';
+import type { MealCategory } from '@/types/foodTypes';
+import type { Weekday } from "@/types/dateTypes";
 import {
-  getMealsByWeekday,
-  getWeeklyNutrition,
-  getWeeklyChartData,
-  getDayMeals,
-  getMealsByType,
-  getMealTypeNutrition,
-} from "@/utils/nutrition";
-
+  nutritionBaselines,
+  getDefaultMealsByWeekday,
+  getDefaultWeeklyNutrition,
+  getDefaultWeeklyChartData,
+} from "@/constants/home-constant";
 
 export const HomePageLayout: FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const mealPlan = dummyMeals; // Todo: APIから取得できるようにする
-  const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday);
+  const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday as Weekday);
   const dispatch = useDispatch();
 
-  const mealsByWeekday = getMealsByWeekday(mealPlan);
+  const mealsByWeekday = getDefaultMealsByWeekday();
   const dayNutrition = mealsByWeekday[selectedWeekday];
-  console.log("Meals By Weekday:", mealsByWeekday);
-  console.log("Day Nutrition:", dayNutrition);
+  const weeklyNutrition = getDefaultWeeklyNutrition(mealsByWeekday);
+  const weeklyChartData = getDefaultWeeklyChartData(weeklyNutrition);
 
-  // Goals
-  const calorieGoal = user?.dailyCalorieGoal ?? 2000;
-  const proteinGoal = Math.round(
-    (calorieGoal * (user?.macroGoals?.protein ?? 25)) / 100 / 4
-  );
-  const carbGoal = Math.round(
-    (calorieGoal * (user?.macroGoals?.carbs ?? 50)) / 100 / 4
-  );
-  const fatGoal = Math.round(
-    (calorieGoal * (user?.macroGoals?.fat ?? 25)) / 100 / 9
-  );
-
-  const weeklyNutrition = getWeeklyNutrition(weekDays, mealsByWeekday);
-  const weeklyChartData = getWeeklyChartData(weeklyNutrition);
-
-  const dayMeals = getDayMeals(mealPlan, selectedWeekday);
-  const mealsByType = getMealsByType(dayMeals);
-  const getNutritionByMealType = (mealType: keyof MealsByType) =>
-    getMealTypeNutrition(mealsByType[mealType] || []);
+  // // 食事カテゴリごとの栄養素合計取得関数
+  const getNutritionByMealType = (mealType: MealCategory) =>
+    dayNutrition && dayNutrition[mealType]
+      ? dayNutrition[mealType].totalNutrition
+      : { calories: 0, protein: 0, carbs: 0, fat: 0 };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -70,18 +49,16 @@ export const HomePageLayout: FC = () => {
           {/* Daily Overview */}
           <DailyOverview
             selectedWeekday={selectedWeekday}
-            setSelectedWeekday={(day: string) => {
+            setSelectedWeekday={(day: Weekday) => {
               dispatch(setSelectedWeekday(day));
             }}
             weekDays={weekDays}
             dayNutrition={dayNutrition}
-            calorieGoal={calorieGoal}
-            proteinGoal={proteinGoal}
-            carbGoal={carbGoal}
+            nutritionBaselines={nutritionBaselines}
           />
           {/* Meal Breakdown */}
           <MealBreakdown
-            mealsByType={mealsByType}
+            mealsByType={dayNutrition}
             getMealTypeNutrition={getNutritionByMealType}
           />
         </div>

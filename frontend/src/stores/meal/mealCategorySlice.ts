@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MealsByType, MealCategory } from '@/types/foodTypes';
+import { DailyMeals, MealCategory } from '@/types/foodTypes';
 
 interface MealCategoryState {
-  mealsByType: MealsByType;
+  mealsByType: DailyMeals;
   selectedCategory: MealCategory;
 }
 
@@ -20,7 +20,7 @@ const mealCategorySlice = createSlice({
   name: 'mealCategory',
   initialState,
   reducers: {
-    setMealsByType: (state, action: PayloadAction<MealsByType>) => {
+    setMealsByType: (state, action: PayloadAction<DailyMeals>) => {
       state.mealsByType = action.payload;
     },
     setSelectedCategory: (state, action: PayloadAction<MealCategory>) => {
