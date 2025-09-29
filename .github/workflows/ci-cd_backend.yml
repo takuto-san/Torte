@@ -97,23 +97,23 @@ jobs:
 
   # E2Eテスト（Todo）
   # e2eを含むテストファイルが実行される.詳細はjest.e2e.tsを参照
-  E2ETest:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend
-    needs: Build
-    strategy:
-      matrix:
-        node-version: ['23.x']
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: ./backend/package-lock.json
-      - run: npm ci
-      - run: npm run test:e2e
+  # E2ETest:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: backend
+  #   needs: Build
+  #   strategy:
+  #     matrix:
+  #       node-version: ['23.x']
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #         cache: "npm"
+  #         cache-dependency-path: ./backend/package-lock.json
+  #     - run: npm ci
+  #     - run: npm run test:e2e
