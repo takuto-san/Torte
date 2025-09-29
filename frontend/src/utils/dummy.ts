@@ -1,4 +1,4 @@
-import { Food, Meal, Nutrition, MealCategory } from '@/types/foodTypes';
+import { Food, Meal, MealCategory } from '@/types/foodTypes';
 
 // Food型（最終スキーマ準拠）
 export const dummyFoods: Food[] = [

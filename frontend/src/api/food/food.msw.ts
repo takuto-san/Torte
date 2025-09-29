@@ -14,29 +14,19 @@ export const getFoodControllerSearchFoodsMockHandler = (
     const category = urlObj.searchParams.get("category")?.toLowerCase() ?? "";
     const tab = urlObj.searchParams.get("tab") ?? "";
 
-    // console.log("Request URL:", info.request.url);
-    // console.log("Search Query:", q);
-    // console.log("Category Filter:", category);
-    // console.log("Tab:", tab);
-
     let results = dummyFoods;
 
+    // 検索クエリ対応（nameのみ）
     if (q) {
       results = results.filter(food =>
-        food.name.toLowerCase().includes(q) ||
-        food.cuisine.toLowerCase().includes(q)
+        food.name.toLowerCase().includes(q)
       );
     }
+    // カテゴリ対応（recordedCategoriesのみ）
     if (category) {
       results = results.filter(food =>
         food.recordedCategories.map(cat => cat.toLowerCase()).includes(category)
-        || (food.dietaryTags?.map(tag => tag.toLowerCase()).includes(category))
       );
-    }
-    if (tab === "history") {
-      results = results.filter(food => food.isRecorded);
-    } else if (tab === "select") {
-      results = results.filter(food => !food.isRecorded);
     }
 
     if (typeof overrideResponse === "function") {
