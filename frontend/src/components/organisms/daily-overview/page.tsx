@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 import { NutritionProgressProps, DailyOverviewProps } from "@/types/propsTypes";
+import { MealCategory } from "@/types/foodTypes";
+import { Weekday } from "@/types/dateTypes";
 
 export const NutritionProgress: FC<NutritionProgressProps> = ({
   label,
@@ -31,18 +33,35 @@ export const NutritionProgress: FC<NutritionProgressProps> = ({
   );
 };
 
+// 日別栄養概要
 export const DailyOverview: React.FC<DailyOverviewProps> = ({
   selectedWeekday,
   setSelectedWeekday,
   weekDays,
   dayNutrition,
-  calorieGoal,
-  proteinGoal,
-  carbGoal,
+  nutritionBaselines,
 }) => {
-  const calories = dayNutrition?.calories ?? 0;
-  const protein  = dayNutrition?.protein  ?? 0;
-  const carbs    = dayNutrition?.carbs    ?? 0;
+  const categories: MealCategory[] = ["breakfast", "lunch", "dinner", "snack"];
+  const total = categories.reduce(
+    (sum, cat) => {
+      const nutrition = dayNutrition?.[cat]?.totalNutrition ?? {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+      };
+      return {
+        calories: sum.calories + nutrition.calories,
+        protein: sum.protein + nutrition.protein,
+        carbs: sum.carbs + nutrition.carbs,
+      };
+    },
+    { calories: 0, protein: 0, carbs: 0 },
+  );
+
+  const calories = total.calories;
+  const protein = total.protein;
+  const carbs = total.carbs;
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
@@ -50,7 +69,9 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
         <h2 className="text-xl font-semibold text-gray-900">Daily Overview</h2>
         <select
           value={selectedWeekday}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedWeekday(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setSelectedWeekday(e.target.value as Weekday)
+          }
           className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         >
           {weekDays.map((day) => (
@@ -68,7 +89,7 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
           </div>
           <div className="text-gray-600">Calories Consumed</div>
           <div className="text-sm text-gray-500">
-            {Math.round(calorieGoal - calories)} remaining
+            {Math.round(nutritionBaselines.calories - calories)} remaining
           </div>
         </div>
       </div>
@@ -77,20 +98,20 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
         <NutritionProgress
           label="Calories"
           current={calories}
-          goal={calorieGoal}
+          goal={nutritionBaselines.calories}
           color="bg-emerald-500"
           unit=""
         />
         <NutritionProgress
           label="Protein"
           current={protein}
-          goal={proteinGoal}
+          goal={nutritionBaselines.protein}
           color="bg-blue-500"
         />
         <NutritionProgress
           label="Carbs"
           current={carbs}
-          goal={carbGoal}
+          goal={nutritionBaselines.carbs}
           color="bg-purple-500"
         />
       </div>

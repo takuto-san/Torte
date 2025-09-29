@@ -10,9 +10,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/auth/login": {
@@ -24,9 +22,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Auth"
-        ]
+        "tags": ["Auth"]
       }
     },
     "/users/{id}": {
@@ -48,9 +44,28 @@
           }
         },
         "summary": "Get user by ID",
-        "tags": [
-          "Users"
-        ]
+        "tags": ["Users"]
+      }
+    },
+    "/food/search": {
+      "get": {
+        "operationId": "FoodController_searchFoods",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": ["Food"]
       }
     }
   },

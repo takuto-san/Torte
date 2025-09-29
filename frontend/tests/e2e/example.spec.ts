@@ -1,5 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('noop', async () => {
+test("noop", async () => {
   expect(true).toBe(true);
 });

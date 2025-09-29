@@ -116,4 +116,4 @@ jobs:
           cache: "npm"
           cache-dependency-path: ./backend/package-lock.json
       - run: npm ci
-      - run: npm run e2e
+      - run: npm run test:e2e

@@ -1,18 +1,13 @@
-import type { MealsByType } from "./mealTypes";
+import type { Meal, DailyMeals, Nutrition, MealCategory } from "./foodTypes";
+import { Weekday } from "./dateTypes";
 import { ButtonProps } from "@mui/material/Button";
 
 export type DailyOverviewProps = {
-  selectedWeekday: string;
-  setSelectedWeekday: (weekday: string) => void;
-  weekDays: string[];
-  dayNutrition: {
-    calories: number;
-    protein: number;
-    carbs: number;
-  };
-  calorieGoal: number;
-  proteinGoal: number;
-  carbGoal: number;
+  selectedWeekday: Weekday;
+  setSelectedWeekday: (weekday: Weekday) => void;
+  weekDays: Weekday[];
+  dayNutrition: DailyMeals | null;
+  nutritionBaselines: Nutrition;
 };
 
 export type NutritionProgressProps = {
@@ -24,18 +19,13 @@ export type NutritionProgressProps = {
 };
 
 export type MealBreakdownProps = {
-  mealsByType: MealsByType;
-  getMealTypeNutrition: (mealType: keyof MealsByType) => {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
+  mealsByType: DailyMeals;
+  getMealTypeNutrition: (mealType: MealCategory) => Nutrition;
 };
 
 export type WeeklyTrendsProps = {
-  weeklyChartData: { 
-    name: string; 
+  weeklyChartData: {
+    name: string;
     calories: number;
   }[];
 };
@@ -44,3 +34,9 @@ export type LinkButtonProps = {
   href: string;
   children: React.ReactNode;
 } & ButtonProps;
+
+export type MealCardProps = {
+  meal: Meal;
+  isSelected: boolean;
+  onToggle: () => void;
+};

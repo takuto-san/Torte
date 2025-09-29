@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       // other domains you might already have...
-      "placehold.jp"
+      "placehold.jp",
     ],
   },
 };

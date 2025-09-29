@@ -1,13 +1,12 @@
-"use client"
-import React from 'react';
-import { LinkButton } from '@/components/atoms/link-button/page';
+"use client";
+import React from "react";
+import { LinkButton } from "@/components/atoms/link-button/page";
 
 export const HomeLayoutWrapper = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-
   return (
     <div>
       {children}
@@ -15,16 +14,16 @@ export const HomeLayoutWrapper = ({
         href="/record"
         variant="contained"
         sx={{
-          position: 'fixed',
+          position: "fixed",
           bottom: 24,
           right: 24,
-          backgroundColor: '#239e50ff',
+          backgroundColor: "#239e50ff",
           fontSize: 18,
-          padding: '15px 24px',
-          borderRadius: '20px',
+          padding: "15px 24px",
+          borderRadius: "20px",
           boxShadow: 2,
-          '&:hover': {
-            backgroundColor: '#05aa42ff',
+          "&:hover": {
+            backgroundColor: "#05aa42ff",
           },
         }}
       >
@@ -32,4 +31,4 @@ export const HomeLayoutWrapper = ({
       </LinkButton>
     </div>
   );
-}
+};

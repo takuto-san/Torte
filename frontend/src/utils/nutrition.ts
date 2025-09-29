@@ -1,55 +1,68 @@
-import type { 
-  Meal, 
-  MealsByType, 
-  MealsByWeekday,
-  NutritionSummary,
-} from "@/types/mealTypes";
-import { getWeekday } from "@/utils/date";
+import type {
+  Meal,
+  DailyMeals,
+  WeeklyMeals,
+  Nutrition,
+  MealCategory,
+} from "@/types/foodTypes";
+import type { Weekday } from "@/types/dateTypes";
 
-// 曜日ごとの栄養素集計
-export function getMealsByWeekday(mealPlan: Meal[]): MealsByWeekday {
-  return mealPlan.reduce((acc: MealsByWeekday, meal: Meal) => {
-    const weekday = getWeekday(meal.date); // "Monday", etc.
-    const multiplier = meal.servings / meal.recipe.servings;
-
-    if (!acc[weekday]) {
-      acc[weekday] = {
-        calories: 0,
-        protein: 0,
-        carbs: 0,
-        fat: 0,
-        count: 0,
-      };
-    }
-
-    acc[weekday].calories += meal.recipe.nutrition.calories * multiplier;
-    acc[weekday].protein += meal.recipe.nutrition.protein * multiplier;
-    acc[weekday].carbs += meal.recipe.nutrition.carbs * multiplier;
-    acc[weekday].fat += meal.recipe.nutrition.fat * multiplier;
-    acc[weekday].count += 1;
-
-    return acc;
-  }, {} as MealsByWeekday);
+// 1日分のカテゴリごとの食事データ生成
+export function getDailyMeals(meals: Meal[]): DailyMeals {
+  const categories: MealCategory[] = ["breakfast", "lunch", "dinner", "snack"];
+  const dailyMeals: DailyMeals = {} as DailyMeals;
+  for (const category of categories) {
+    const filteredMeals = meals.filter((m) => m.mealType === category);
+    const totalNutrition = getTotalNutrition(filteredMeals);
+    dailyMeals[category] = {
+      meals: filteredMeals,
+      totalNutrition,
+    };
+  }
+  return dailyMeals;
 }
 
+// 1食カテゴリの合計栄養素
+export function getTotalNutrition(meals: Meal[]): Nutrition {
+  return meals.reduce(
+    (total, meal) => ({
+      calories: total.calories + meal.totalNutrition.calories,
+      protein: total.protein + meal.totalNutrition.protein,
+      carbs: total.carbs + meal.totalNutrition.carbs,
+      fat: total.fat + meal.totalNutrition.fat,
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0 },
+  );
+}
+
+// 週間データ生成
+export function getWeeklyMeals(
+  mealPlans: { weekday: Weekday; meals: Meal[] }[],
+): WeeklyMeals {
+  const weeklyMeals: WeeklyMeals = {} as WeeklyMeals;
+  for (const { weekday, meals } of mealPlans) {
+    weeklyMeals[weekday] = getDailyMeals(meals);
+  }
+  return weeklyMeals;
+}
+
+// 週間栄養素（曜日ごと合計）
 export function getWeeklyNutrition(
-  weekDays: string[],
-  mealsByWeekday: MealsByWeekday
+  weekDays: Weekday[],
+  weeklyMeals: WeeklyMeals,
 ) {
-  return weekDays.map((day) => ({
-    day,
-    nutrition: mealsByWeekday[day] || {
-      calories: 0,
-      protein: 0,
-      carbs: 0,
-      fat: 0,
-    },
-  }));
+  return weekDays.map((day: Weekday) => {
+    const daily = weeklyMeals[day];
+    const nutrition = daily
+      ? getTotalNutrition(Object.values(daily).flatMap((dm) => dm.meals))
+      : { calories: 0, protein: 0, carbs: 0, fat: 0 };
+    return { day, nutrition };
+  });
 }
 
 // グラフ用データ整形
 export function getWeeklyChartData(
-  weeklyNutrition: { day: string; nutrition: { calories: number } }[]
+  weeklyNutrition: { day: string; nutrition: Nutrition }[],
 ) {
   return weeklyNutrition.map((day) => ({
     name: day.day.slice(0, 3),
@@ -58,18 +71,22 @@ export function getWeeklyChartData(
 }
 
 // 合計カロリー
-export function getTotalCalories(weeklyNutrition: { nutrition: { calories: number } }[]): number {
+export function getTotalCalories(
+  weeklyNutrition: { nutrition: Nutrition }[],
+): number {
   return weeklyNutrition.reduce((sum, day) => sum + day.nutrition.calories, 0);
 }
 
 // 平均カロリー
-export function getAverageCalories(weeklyNutrition: { nutrition: { calories: number } }[]): number {
+export function getAverageCalories(
+  weeklyNutrition: { nutrition: Nutrition }[],
+): number {
   const total = getTotalCalories(weeklyNutrition);
   return Math.round(total / weeklyNutrition.length);
 }
 
 // 連続記録（ストリーク）の日数
-export function getStreak(weeklyNutrition: { nutrition: { calories: number } }[]): number {
+export function getStreak(weeklyNutrition: { nutrition: Nutrition }[]): number {
   return weeklyNutrition.reduceRight((count, day) => {
     if (day.nutrition.calories > 0) return count + 1;
     return count > 0 ? count : 0;
@@ -77,42 +94,30 @@ export function getStreak(weeklyNutrition: { nutrition: { calories: number } }[]
 }
 
 // 目標達成日数・達成率
-export function getGoalAchievement(weeklyNutrition: { nutrition: { calories: number } }[], calorieGoal: number): number {
+export function getGoalAchievement(
+  weeklyNutrition: { nutrition: Nutrition }[],
+  calorieGoal: number,
+): number {
   const days = weeklyNutrition.filter(
-    (day) => day.nutrition.calories >= calorieGoal * 0.9
+    (day) => day.nutrition.calories >= calorieGoal * 0.9,
   ).length;
   return Math.round((days / weeklyNutrition.length) * 100);
 }
 
-// 曜日ごとの食事のフィルタ
-export function getDayMeals(mealPlan: Meal[], selectedWeekday: string, getWeekdayFromDate: (date: string) => string): Meal[] {
-  return mealPlan.filter(
-    (meal) => getWeekdayFromDate(meal.date) === selectedWeekday
-  );
+// 曜日ごとのMeal抽出
+export function getDayMeals(
+  weeklyMeals: WeeklyMeals,
+  weekday: Weekday,
+): Meal[] {
+  const dailyMeals = weeklyMeals[weekday];
+  if (!dailyMeals) return [];
+  return Object.values(dailyMeals).flatMap((dm) => dm.meals);
 }
 
-// 食事タイプごとの分類
-export function getMealsByType(dayMeals: Meal[]): MealsByType {
-  return {
-    breakfast: dayMeals.filter((meal) => meal.mealType === "breakfast"),
-    lunch: dayMeals.filter((meal) => meal.mealType === "lunch"),
-    dinner: dayMeals.filter((meal) => meal.mealType === "dinner"),
-    snack: dayMeals.filter((meal) => meal.mealType === "snack"),
-  };
-}
-
-// 食事タイプごとの栄養素合計
-export function getMealTypeNutrition(meals: Meal[]): NutritionSummary {
-  return meals.reduce(
-    (total, meal) => {
-      const multiplier = meal.servings / meal.recipe.servings;
-      return {
-        calories: total.calories + meal.recipe.nutrition.calories * multiplier,
-        protein: total.protein + meal.recipe.nutrition.protein * multiplier,
-        carbs: total.carbs + meal.recipe.nutrition.carbs * multiplier,
-        fat: total.fat + meal.recipe.nutrition.fat * multiplier,
-      };
-    },
-    { calories: 0, protein: 0, carbs: 0, fat: 0 }
-  );
+// 食事タイプごとのMeals抽出
+export function getMealsByType(
+  dailyMeals: DailyMeals,
+  type: MealCategory,
+): Meal[] {
+  return dailyMeals[type]?.meals ?? [];
 }

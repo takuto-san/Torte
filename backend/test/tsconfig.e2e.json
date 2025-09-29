@@ -1,4 +1,4 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../typings/global.d.ts", "../src/**/*", "e2e/**/*"],
+  "include": ["../typings/global.d.ts", "../src/**/*", "e2e/**/*"]
 }

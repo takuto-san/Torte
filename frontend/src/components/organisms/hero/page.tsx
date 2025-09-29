@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -29,7 +29,7 @@ const Hero: React.FC = () => (
       transition={{ delay: 0.6, duration: 0.5 }}
       className="flex flex-col sm:flex-row gap-4 justify-center"
     >
-      <Link 
+      <Link
         href="/home"
         className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-emerald-700 transition transform hover:scale-105 inline-block"
       >
