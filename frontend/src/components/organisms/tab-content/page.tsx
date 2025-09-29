@@ -1,6 +1,7 @@
 import { useSearchQuery } from "@/hooks/useSearchQuery";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/stores/store";
+import type { Food } from "@/types/foodTypes";
 
 export const TabContent: React.FC = () => {
   const { data, isLoading, error } = useSearchQuery();
@@ -21,11 +22,17 @@ export const TabContent: React.FC = () => {
         </div>
       ) : (
         <ul>
-          {foodList.map((food: any) => (
+          {foodList.map((food: Food) => (
             <li key={food.id} className="p-2 border-b">
               <div className="font-bold">{food.name}</div>
-              {food.category && <div className="text-sm text-gray-500">カテゴリ: {food.category}</div>}
-              {food.calories && <div className="text-sm text-gray-500">カロリー: {food.calories}</div>}
+              {food.recordedCategories.length > 0 && (
+                <div className="text-sm text-gray-500">
+                  カテゴリ: {food.recordedCategories.join(", ")}
+                </div>
+              )}
+              <div className="text-sm text-gray-500">
+                カロリー: {food.nutrition.calories}
+              </div>
             </li>
           ))}
         </ul>
