@@ -21,7 +21,7 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import { customFetch } from "@/lib/mocks/customFetch";
+import { customFetch } from "../../lib/mocks/customFetch";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 

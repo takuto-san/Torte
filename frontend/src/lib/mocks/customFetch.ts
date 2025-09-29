@@ -1,6 +1,6 @@
 export const customFetch = async <TData>(
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<TData> => {
   const baseUrl = "http://localhost:8080"; // 環境変数などから取得するのが望ましい
   const requestUrl = new URL(url, baseUrl);
@@ -21,7 +21,7 @@ export const customFetch = async <TData>(
     // エラー時: 今回はシンプルにステータスのみを含むエラーを throw
     if (!response.ok) {
       throw new Error(
-        `API request failed with status ${response.status}: ${response.statusText}`
+        `API request failed with status ${response.status}: ${response.statusText}`,
       );
     }
 

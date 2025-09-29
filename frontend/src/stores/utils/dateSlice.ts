@@ -1,9 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTodayDate } from '@/utils/date';
-import { DateObj, DateState } from '@/types/dateTypes';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DateObj, DateState } from "@/types/dateTypes";
 
-const initialState: DateState = {
-  selectedDate: getTodayDate(),
+export const initialState: DateState = {
+  selectedDate: undefined,
 };
 
 function dateObjToDate(d: DateObj): Date {
@@ -19,18 +18,20 @@ function dateToDateObj(date: Date): DateObj {
 }
 
 export const dateSlice = createSlice({
-  name: 'date',
+  name: "date",
   initialState,
   reducers: {
     setDate: (state, action: PayloadAction<DateObj>) => {
       state.selectedDate = action.payload;
     },
     incrementDay: (state) => {
+      if (!state.selectedDate) return;
       const date = dateObjToDate(state.selectedDate);
       date.setDate(date.getDate() + 1);
       state.selectedDate = dateToDateObj(date);
     },
     decrementDay: (state) => {
+      if (!state.selectedDate) return;
       const date = dateObjToDate(state.selectedDate);
       date.setDate(date.getDate() - 1);
       state.selectedDate = dateToDateObj(date);

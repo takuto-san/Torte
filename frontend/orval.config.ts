@@ -32,7 +32,7 @@ export default defineConfig({
     },
     hooks: {
       // ここは、プロジェクトで使用しているフォーマッターに合わせて設定してください
-      afterAllFilesWrite: 'prettier --write', // 例: prettier 生成したファイルを整形
+      afterAllFilesWrite: "prettier --write", // 例: prettier 生成したファイルを整形
     },
   },
 });

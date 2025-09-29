@@ -1,5 +1,5 @@
 import React from "react";
-import type { WeeklyTrendsProps } from '@/types/propsTypes';
+import type { WeeklyTrendsProps } from "@/types/propsTypes";
 import {
   BarChart,
   Bar,
@@ -9,7 +9,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export const WeeklyTrends: React.FC<WeeklyTrendsProps> = ({ weeklyChartData }) => {
+export const WeeklyTrends: React.FC<WeeklyTrendsProps> = ({
+  weeklyChartData,
+}) => {
   return (
     <div className="bg-white rounded-xl shadow-sm p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">

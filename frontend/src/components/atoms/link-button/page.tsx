@@ -8,11 +8,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   children,
   ...buttonProps
 }) => (
-  <Button
-    component={Link}
-    href={href}
-    {...buttonProps}
-  >
+  <Button component={Link} href={href} {...buttonProps}>
     {children}
   </Button>
 );

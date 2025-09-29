@@ -1,5 +1,5 @@
-import React from 'react';
-import { Header } from '@/components/organisms/header/page';
+import React from "react";
+import { Header } from "@/components/organisms/header/page";
 
 export default function HomeLayout({
   children,

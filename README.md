@@ -52,3 +52,6 @@ docker-compose build backend
 
 API仕様変更時
 npm run generate:api
+
+コード自動修正
+npx prettier --write .
