@@ -1,11 +1,10 @@
 /* eslint-disable import/no-default-export */
 import type { Config } from 'jest';
-
-import config from '../jest.config';
+import jestConfig from '../jest.config';
 
 // https://github.com/nestjs/graphql/issues/810#issuecomment-618308354
-const jestConfig: Config = {
-  ...config,
+const e2eJestConfig: Config = {
+  ...jestConfig,
   rootDir: '.',
   testMatch: ['**/e2e/**/*.+(spec|test).[tj]s?(x)'],
   testPathIgnorePatterns: ['/node_modules/'],
@@ -26,4 +25,4 @@ const jestConfig: Config = {
   },
 };
 
-export default jestConfig;
+export default e2eJestConfig;
