@@ -12,7 +12,6 @@ export const getFoodControllerSearchFoodsMockHandler = (
 
     const q = urlObj.searchParams.get("q")?.toLowerCase() ?? "";
     const category = urlObj.searchParams.get("category")?.toLowerCase() ?? "";
-    const tab = urlObj.searchParams.get("tab") ?? "";
 
     let results = dummyFoods;
 
