@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 import { NutritionProgressProps, DailyOverviewProps } from "@/types/propsTypes";
 import { MealCategory } from "@/types/foodTypes";
+import { Weekday } from "@/types/dateTypes";
 
 export const NutritionProgress: FC<NutritionProgressProps> = ({
   label,
@@ -63,7 +64,7 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
         <h2 className="text-xl font-semibold text-gray-900">Daily Overview</h2>
         <select
           value={selectedWeekday}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedWeekday(e.target.value as any)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedWeekday(e.target.value as Weekday)}
           className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         >
           {weekDays.map((day) => (
