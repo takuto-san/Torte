@@ -8,12 +8,12 @@ interface MealCategoryState {
 
 export const initialState: MealCategoryState = {
   mealsByType: {
-    breakfast: [],
-    lunch: [],
-    dinner: [],
-    snack: [],
+    breakfast: { meals: [], totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 } },
+    lunch:     { meals: [], totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 } },
+    dinner:    { meals: [], totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 } },
+    snack:     { meals: [], totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 } },
   },
-  selectedCategory: "",
+  selectedCategory: "breakfast",
 };
 
 const mealCategorySlice = createSlice({
