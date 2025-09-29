@@ -5,7 +5,7 @@ import type { Food } from "@/types/foodTypes";
 
 export const TabContent: React.FC = () => {
   const { data, isLoading, error } = useSearchQuery();
-  const foodList = Array.isArray(data) ? data : data?.data ?? [];
+  const foodList = Array.isArray(data) ? data : (data?.data ?? []);
   const inputText = useSelector((state: RootState) => state.search.value);
 
   return (

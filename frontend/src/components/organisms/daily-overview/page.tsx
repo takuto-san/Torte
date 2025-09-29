@@ -44,14 +44,19 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
   const categories: MealCategory[] = ["breakfast", "lunch", "dinner", "snack"];
   const total = categories.reduce(
     (sum, cat) => {
-      const nutrition = dayNutrition?.[cat]?.totalNutrition ?? { calories: 0, protein: 0, carbs: 0, fat: 0 };
+      const nutrition = dayNutrition?.[cat]?.totalNutrition ?? {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+      };
       return {
         calories: sum.calories + nutrition.calories,
         protein: sum.protein + nutrition.protein,
         carbs: sum.carbs + nutrition.carbs,
       };
     },
-    { calories: 0, protein: 0, carbs: 0 }
+    { calories: 0, protein: 0, carbs: 0 },
   );
 
   const calories = total.calories;
@@ -64,7 +69,9 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
         <h2 className="text-xl font-semibold text-gray-900">Daily Overview</h2>
         <select
           value={selectedWeekday}
-          onChange={(e: ChangeEvent<HTMLSelectElement>) => setSelectedWeekday(e.target.value as Weekday)}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setSelectedWeekday(e.target.value as Weekday)
+          }
           className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
         >
           {weekDays.map((day) => (

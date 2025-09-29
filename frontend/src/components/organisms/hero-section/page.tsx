@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import RestaurantIcon from '@mui/icons-material/Restaurant';
+import RestaurantIcon from "@mui/icons-material/Restaurant";
 import Link from "next/link";
 
 const HeroSection: React.FC = () => (

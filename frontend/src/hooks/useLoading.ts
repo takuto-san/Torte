@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setLoading, unsetLoading } from "@/stores/loading/loadingSlice";

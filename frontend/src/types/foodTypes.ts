@@ -1,4 +1,4 @@
-import { Weekday } from './dateTypes';
+import { Weekday } from "./dateTypes";
 
 // 1週間の食事
 export type WeeklyMeals = {
@@ -14,7 +14,7 @@ export type DailyMeals = {
 };
 
 // 食事カテゴリ
-export type MealCategory = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+export type MealCategory = "breakfast" | "lunch" | "dinner" | "snack";
 
 // カテゴリごとの食事
 export type Meal = {
@@ -37,5 +37,5 @@ export type Food = {
   name: string;
   nutrition: Nutrition;
   image: string;
-  recordedCategories: MealCategory[]; 
+  recordedCategories: MealCategory[];
 };

@@ -7,7 +7,9 @@ import { RootState } from "@/lib/stores/store";
 
 export const useInitDate = () => {
   const dispatch = useDispatch();
-  const selectedDate = useSelector((state: RootState) => state.date.selectedDate);
+  const selectedDate = useSelector(
+    (state: RootState) => state.date.selectedDate,
+  );
 
   useEffect(() => {
     if (!selectedDate) {

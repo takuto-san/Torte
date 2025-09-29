@@ -1,6 +1,6 @@
-import type { 
-  Meal, 
-  DailyMeals, 
+import type {
+  Meal,
+  DailyMeals,
   WeeklyMeals,
   Nutrition,
   MealCategory,
@@ -12,7 +12,7 @@ export function getDailyMeals(meals: Meal[]): DailyMeals {
   const categories: MealCategory[] = ["breakfast", "lunch", "dinner", "snack"];
   const dailyMeals: DailyMeals = {} as DailyMeals;
   for (const category of categories) {
-    const filteredMeals = meals.filter(m => m.mealType === category);
+    const filteredMeals = meals.filter((m) => m.mealType === category);
     const totalNutrition = getTotalNutrition(filteredMeals);
     dailyMeals[category] = {
       meals: filteredMeals,
@@ -31,12 +31,14 @@ export function getTotalNutrition(meals: Meal[]): Nutrition {
       carbs: total.carbs + meal.totalNutrition.carbs,
       fat: total.fat + meal.totalNutrition.fat,
     }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    { calories: 0, protein: 0, carbs: 0, fat: 0 },
   );
 }
 
 // 週間データ生成
-export function getWeeklyMeals(mealPlans: { weekday: Weekday; meals: Meal[] }[]): WeeklyMeals {
+export function getWeeklyMeals(
+  mealPlans: { weekday: Weekday; meals: Meal[] }[],
+): WeeklyMeals {
   const weeklyMeals: WeeklyMeals = {} as WeeklyMeals;
   for (const { weekday, meals } of mealPlans) {
     weeklyMeals[weekday] = getDailyMeals(meals);
@@ -45,11 +47,14 @@ export function getWeeklyMeals(mealPlans: { weekday: Weekday; meals: Meal[] }[])
 }
 
 // 週間栄養素（曜日ごと合計）
-export function getWeeklyNutrition(weekDays: Weekday[], weeklyMeals: WeeklyMeals) {
+export function getWeeklyNutrition(
+  weekDays: Weekday[],
+  weeklyMeals: WeeklyMeals,
+) {
   return weekDays.map((day: Weekday) => {
     const daily = weeklyMeals[day];
     const nutrition = daily
-      ? getTotalNutrition(Object.values(daily).flatMap(dm => dm.meals))
+      ? getTotalNutrition(Object.values(daily).flatMap((dm) => dm.meals))
       : { calories: 0, protein: 0, carbs: 0, fat: 0 };
     return { day, nutrition };
   });
@@ -57,7 +62,7 @@ export function getWeeklyNutrition(weekDays: Weekday[], weeklyMeals: WeeklyMeals
 
 // グラフ用データ整形
 export function getWeeklyChartData(
-  weeklyNutrition: { day: string; nutrition: Nutrition }[]
+  weeklyNutrition: { day: string; nutrition: Nutrition }[],
 ) {
   return weeklyNutrition.map((day) => ({
     name: day.day.slice(0, 3),
@@ -66,12 +71,16 @@ export function getWeeklyChartData(
 }
 
 // 合計カロリー
-export function getTotalCalories(weeklyNutrition: { nutrition: Nutrition }[]): number {
+export function getTotalCalories(
+  weeklyNutrition: { nutrition: Nutrition }[],
+): number {
   return weeklyNutrition.reduce((sum, day) => sum + day.nutrition.calories, 0);
 }
 
 // 平均カロリー
-export function getAverageCalories(weeklyNutrition: { nutrition: Nutrition }[]): number {
+export function getAverageCalories(
+  weeklyNutrition: { nutrition: Nutrition }[],
+): number {
   const total = getTotalCalories(weeklyNutrition);
   return Math.round(total / weeklyNutrition.length);
 }
@@ -87,22 +96,28 @@ export function getStreak(weeklyNutrition: { nutrition: Nutrition }[]): number {
 // 目標達成日数・達成率
 export function getGoalAchievement(
   weeklyNutrition: { nutrition: Nutrition }[],
-  calorieGoal: number
+  calorieGoal: number,
 ): number {
   const days = weeklyNutrition.filter(
-    (day) => day.nutrition.calories >= calorieGoal * 0.9
+    (day) => day.nutrition.calories >= calorieGoal * 0.9,
   ).length;
   return Math.round((days / weeklyNutrition.length) * 100);
 }
 
 // 曜日ごとのMeal抽出
-export function getDayMeals(weeklyMeals: WeeklyMeals, weekday: Weekday): Meal[] {
+export function getDayMeals(
+  weeklyMeals: WeeklyMeals,
+  weekday: Weekday,
+): Meal[] {
   const dailyMeals = weeklyMeals[weekday];
   if (!dailyMeals) return [];
-  return Object.values(dailyMeals).flatMap(dm => dm.meals);
+  return Object.values(dailyMeals).flatMap((dm) => dm.meals);
 }
 
 // 食事タイプごとのMeals抽出
-export function getMealsByType(dailyMeals: DailyMeals, type: MealCategory): Meal[] {
+export function getMealsByType(
+  dailyMeals: DailyMeals,
+  type: MealCategory,
+): Meal[] {
   return dailyMeals[type]?.meals ?? [];
 }

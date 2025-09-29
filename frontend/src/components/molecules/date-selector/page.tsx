@@ -1,14 +1,16 @@
-import { Box, IconButton, Typography } from '@mui/material';
-import { getWeekdayJa } from '@/utils/date';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/lib/stores/store';
-import { incrementDay, decrementDay } from '@/stores/utils/dateSlice';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, IconButton, Typography } from "@mui/material";
+import { getWeekdayJa } from "@/utils/date";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/lib/stores/store";
+import { incrementDay, decrementDay } from "@/stores/utils/dateSlice";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const DateSelector = () => {
   const dispatch = useDispatch();
-  const selectedDate = useSelector((state: RootState) => state.date.selectedDate);
+  const selectedDate = useSelector(
+    (state: RootState) => state.date.selectedDate,
+  );
 
   if (!selectedDate) {
     return (
@@ -31,11 +33,13 @@ export const DateSelector = () => {
         <IconButton onClick={() => dispatch(decrementDay())}>
           <ArrowBackIosNewIcon />
         </IconButton>
-        <Typography variant="h6">{selectedDate.month}/{selectedDate.day} ({getWeekdayJa(selectedDate)})</Typography>
+        <Typography variant="h6">
+          {selectedDate.month}/{selectedDate.day} ({getWeekdayJa(selectedDate)})
+        </Typography>
         <IconButton onClick={() => dispatch(incrementDay())}>
           <ArrowForwardIosIcon />
         </IconButton>
       </Box>
     </div>
   );
-}
+};

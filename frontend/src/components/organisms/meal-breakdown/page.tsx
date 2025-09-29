@@ -2,19 +2,17 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconButton } from "@mui/material";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import type { MealBreakdownProps } from "@/types/propsTypes";
-import type { Meal, Food, MealCategory } from '@/types/foodTypes';
+import type { Meal, Food, MealCategory } from "@/types/foodTypes";
 
 export const MealBreakdown: React.FC<MealBreakdownProps> = ({
   mealsByType,
   getMealTypeNutrition,
 }) => (
   <div className="bg-white rounded-xl shadow-sm p-6">
-    <h2 className="text-xl font-semibold text-gray-900 mb-6">
-      Meal Breakdown
-    </h2>
+    <h2 className="text-xl font-semibold text-gray-900 mb-6">Meal Breakdown</h2>
     <div className="space-y-6">
       {Object.entries(mealsByType).map(([mealType, mealObj]) => {
         const mealNutrition = getMealTypeNutrition(mealType as MealCategory);
@@ -41,31 +39,28 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                   >
                     <div className="flex items-center space-x-3">
                       {/* 複数食品の場合は最初の食品を表示（必要に応じて拡張可） */}
-                      {meal.foods[0].image
-                        ? (
-                          <Image
-                            src={
-                              meal.foods[0].image.startsWith("http")
-                                ? meal.foods[0].image
-                                : "/" + meal.foods[0].image
-                            }
-                            alt={meal.foods[0].name}
-                            width={50}
-                            height={50}
-                            className="rounded-lg object-cover"
-                          />
-                        )
-                        : (
-                          <ImageNotSupportedIcon
-                            sx={{ fontSize: 50, color: "#aaa" }}
-                            className="rounded-lg"
-                          />
-                        )
-                      }
+                      {meal.foods[0].image ? (
+                        <Image
+                          src={
+                            meal.foods[0].image.startsWith("http")
+                              ? meal.foods[0].image
+                              : "/" + meal.foods[0].image
+                          }
+                          alt={meal.foods[0].name}
+                          width={50}
+                          height={50}
+                          className="rounded-lg object-cover"
+                        />
+                      ) : (
+                        <ImageNotSupportedIcon
+                          sx={{ fontSize: 50, color: "#aaa" }}
+                          className="rounded-lg"
+                        />
+                      )}
                       <div>
                         {/* 複数食品名をカンマ区切りで表示 */}
                         <div className="font-medium text-gray-900">
-                          {meal.foods.map((food: Food) => food.name).join(', ')}
+                          {meal.foods.map((food: Food) => food.name).join(", ")}
                         </div>
                         {/* 食数情報が必要ならここで拡張可能 */}
                       </div>
@@ -74,9 +69,7 @@ export const MealBreakdown: React.FC<MealBreakdownProps> = ({
                       <div className="font-medium text-gray-900">
                         {Math.round(meal.totalNutrition.calories)}
                       </div>
-                      <div className="text-sm text-gray-500">
-                        calories
-                      </div>
+                      <div className="text-sm text-gray-500">calories</div>
                     </div>
                   </div>
                 ))}

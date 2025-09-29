@@ -35,7 +35,9 @@ export function getWeekdayJa(date?: DateObj): string {
 }
 
 export const getTodayWeekday = (): Weekday => {
-  const weekday = new Date().toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  const weekday = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as Weekday;
   if (weekDays.includes(weekday)) {
     return weekday;
   }
@@ -44,7 +46,9 @@ export const getTodayWeekday = (): Weekday => {
 
 export const getWeekday = (dateStr: string): Weekday => {
   const date = new Date(dateStr);
-  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  const weekday = date.toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as Weekday;
   if (weekDays.includes(weekday)) {
     return weekday;
   }
@@ -53,7 +57,9 @@ export const getWeekday = (dateStr: string): Weekday => {
 
 export const getWeekdayFromDate = (dateString: string): Weekday => {
   const date = new Date(dateString);
-  const weekday = date.toLocaleDateString("en-US", { weekday: "long" }) as Weekday;
+  const weekday = date.toLocaleDateString("en-US", {
+    weekday: "long",
+  }) as Weekday;
   if (weekDays.includes(weekday)) {
     return weekday;
   }

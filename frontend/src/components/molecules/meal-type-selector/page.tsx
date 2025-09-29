@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/lib/stores/store';
-import { setSelectedCategory } from '@/stores/meal/mealCategorySlice';
-import Button from '@mui/material/Button';
-import { Box } from '@mui/material';
-import WbTwilightIcon from '@mui/icons-material/WbTwilight';
-import SunnyIcon from '@mui/icons-material/Sunny';
-import BedtimeIcon from '@mui/icons-material/Bedtime';
-import CoffeeIcon from '@mui/icons-material/Coffee';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { MealCategory } from '@/types/foodTypes';
-import { getCurrentTime } from '@/utils/date';
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/lib/stores/store";
+import { setSelectedCategory } from "@/stores/meal/mealCategorySlice";
+import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
+import WbTwilightIcon from "@mui/icons-material/WbTwilight";
+import SunnyIcon from "@mui/icons-material/Sunny";
+import BedtimeIcon from "@mui/icons-material/Bedtime";
+import CoffeeIcon from "@mui/icons-material/Coffee";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { MealCategory } from "@/types/foodTypes";
+import { getCurrentTime } from "@/utils/date";
 
 // 時間帯から食事カテゴリを取得
 export function getMealCategory(): MealCategory {
@@ -23,25 +23,37 @@ export function getMealCategory(): MealCategory {
 
 function getCategoryIcon(category: MealCategory) {
   switch (category) {
-    case 'breakfast':
+    case "breakfast":
       return <WbTwilightIcon />;
-    case 'lunch':
+    case "lunch":
       return <SunnyIcon />;
-    case 'dinner':
+    case "dinner":
       return <BedtimeIcon />;
-    case 'snack':
+    case "snack":
       return <CoffeeIcon />;
     default:
       return null;
   }
 }
 
-const mealCategories: MealCategory[] = ['breakfast', 'lunch', 'dinner', 'snack'];
-const mealCategoryJa = { breakfast: '朝食', lunch: '昼食', dinner: '夕食', snack: '間食' };
+const mealCategories: MealCategory[] = [
+  "breakfast",
+  "lunch",
+  "dinner",
+  "snack",
+];
+const mealCategoryJa = {
+  breakfast: "朝食",
+  lunch: "昼食",
+  dinner: "夕食",
+  snack: "間食",
+};
 
 export const MealTypeSelector = () => {
   const dispatch = useDispatch();
-  const selectedCategory = useSelector((state: RootState) => state.mealCategory.selectedCategory);
+  const selectedCategory = useSelector(
+    (state: RootState) => state.mealCategory.selectedCategory,
+  );
 
   // 初期値設定
   React.useEffect(() => {
@@ -52,14 +64,15 @@ export const MealTypeSelector = () => {
 
   // クリックで切り替え
   const handleClick = () => {
-    const currentIndex = mealCategories.indexOf(selectedCategory as MealCategory);
+    const currentIndex = mealCategories.indexOf(
+      selectedCategory as MealCategory,
+    );
     const nextIndex = (currentIndex + 1) % mealCategories.length;
     dispatch(setSelectedCategory(mealCategories[nextIndex]));
   };
 
   if (!selectedCategory) return null;
 
- 
   return (
     <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
       <Button
@@ -67,12 +80,12 @@ export const MealTypeSelector = () => {
         onClick={handleClick}
         startIcon={getCategoryIcon(selectedCategory)}
         sx={{
-          borderColor: '#BDBDBD',
-          color: '#333',
-          backgroundColor: '#fff',
-          '&:hover': {
-            backgroundColor: '#ffffff',
-            borderColor: '#BDBDBD',
+          borderColor: "#BDBDBD",
+          color: "#333",
+          backgroundColor: "#fff",
+          "&:hover": {
+            backgroundColor: "#ffffff",
+            borderColor: "#BDBDBD",
           },
         }}
       >

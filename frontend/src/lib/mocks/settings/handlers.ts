@@ -9,4 +9,7 @@ const orvalHandlers = [...getAuthMock(), ...getFoodMock()];
 const originalHandlers: RequestHandler[] = [];
 
 // モックハンドラを結合（originalHandlersを前にすることで、orvalHandlers を上書きするようにしておく）
-export const handlers: RequestHandler[] = [...originalHandlers, ...orvalHandlers];
+export const handlers: RequestHandler[] = [
+  ...originalHandlers,
+  ...orvalHandlers,
+];

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TabState {
   currentTab: number;
@@ -9,7 +9,7 @@ export const initialState: TabState = {
 };
 
 const tabSlice = createSlice({
-  name: 'tab',
+  name: "tab",
   initialState,
   reducers: {
     setCurrentTab(state, action: PayloadAction<number>) {
@@ -18,5 +18,5 @@ const tabSlice = createSlice({
   },
 });
 
-export const { setCurrentTab } = tabSlice.actions;      
+export const { setCurrentTab } = tabSlice.actions;
 export default tabSlice.reducer;

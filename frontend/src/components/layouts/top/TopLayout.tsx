@@ -6,15 +6,16 @@ import { MswProvider } from "@/lib/mocks/MswProvider";
 export function TopLayoutWrapper({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-
   return (
-    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="ja"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
         <MswProvider>
           <QueryProvider>
-            <StoreProvider>
-              {children}
-            </StoreProvider>
+            <StoreProvider>{children}</StoreProvider>
           </QueryProvider>
         </MswProvider>
       </body>

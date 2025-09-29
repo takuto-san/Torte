@@ -9,7 +9,7 @@ import { MealBreakdown } from "@/components/organisms/meal-breakdown/page";
 import { WeeklyOverview } from "@/components/organisms/weekly-overview/page";
 import { WeeklyTrends } from "@/components/organisms/weekly-trends/page";
 import { setSelectedWeekday } from "@/stores/utils/weekdaySlice";
-import type { MealCategory } from '@/types/foodTypes';
+import type { MealCategory } from "@/types/foodTypes";
 import type { Weekday } from "@/types/dateTypes";
 import {
   nutritionBaselines,
@@ -19,7 +19,9 @@ import {
 } from "@/constants/home-constant";
 
 export const HomePageLayout: FC = () => {
-  const selectedWeekday = useSelector((state: RootState) => state.weekday.selectedWeekday as Weekday);
+  const selectedWeekday = useSelector(
+    (state: RootState) => state.weekday.selectedWeekday as Weekday,
+  );
   const dispatch = useDispatch();
 
   const mealsByWeekday = getDefaultMealsByWeekday();
@@ -36,9 +38,7 @@ export const HomePageLayout: FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Torte
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Torte</h1>
         <p className="text-gray-600">
           Track your daily nutrition and stay on target
         </p>

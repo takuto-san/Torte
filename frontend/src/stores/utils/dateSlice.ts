@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DateObj, DateState } from '@/types/dateTypes';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DateObj, DateState } from "@/types/dateTypes";
 
 export const initialState: DateState = {
   selectedDate: undefined,
@@ -18,7 +18,7 @@ function dateToDateObj(date: Date): DateObj {
 }
 
 export const dateSlice = createSlice({
-  name: 'date',
+  name: "date",
   initialState,
   reducers: {
     setDate: (state, action: PayloadAction<DateObj>) => {

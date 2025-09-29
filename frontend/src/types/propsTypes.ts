@@ -24,8 +24,8 @@ export type MealBreakdownProps = {
 };
 
 export type WeeklyTrendsProps = {
-  weeklyChartData: { 
-    name: string; 
+  weeklyChartData: {
+    name: string;
     calories: number;
   }[];
 };

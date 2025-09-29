@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import RestaurantIcon from '@mui/icons-material/Restaurant';
+import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 export const Footer: React.FC = () => (
   <footer className="bg-gray-900 text-white py-10">

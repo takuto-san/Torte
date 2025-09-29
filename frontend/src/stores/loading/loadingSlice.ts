@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface LoadingState {
   isLoading: boolean;
@@ -9,7 +9,7 @@ export const initialState: LoadingState = {
 };
 
 export const loadingSlice = createSlice({
-  name: 'loading',
+  name: "loading",
   initialState,
   reducers: {
     setLoading(state) {
@@ -17,7 +17,7 @@ export const loadingSlice = createSlice({
     },
     unsetLoading(state) {
       state.isLoading = false;
-    }
+    },
   },
 });
 
