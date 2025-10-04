@@ -24,9 +24,9 @@ export const useSearchQuery = () => {
     queryKey,
     queryFn: async () => {
       let endpoint = `${API_BASE_URL}/food/search?tab=${tabName}`;
-      if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;
       if (selectedCategory)
         endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
+      if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;
 
       const res = await fetch(endpoint);
       if (!res.ok) throw new Error("API error");

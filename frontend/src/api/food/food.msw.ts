@@ -1,6 +1,8 @@
 import { HttpResponse, delay, http } from "msw";
 import { dummyFoods } from "@/utils/dummy";
 
+const toLowerString = (value: unknown): string => String(value).toLowerCase();
+
 export const getFoodControllerSearchFoodsMockHandler = (
   overrideResponse?:
     | null
@@ -11,24 +13,27 @@ export const getFoodControllerSearchFoodsMockHandler = (
   return http.get("*/food/search", async (info) => {
     await delay(1000);
 
-    // グローバルなURLコンストラクタを使う（import不要）
     const urlObj = new URL(info.request.url);
 
-    const q = urlObj.searchParams.get("q")?.toLowerCase() ?? "";
+    const tab = urlObj.searchParams.get("tab")?.toLowerCase() ?? "";
     const category = urlObj.searchParams.get("category")?.toLowerCase() ?? "";
+    const q = urlObj.searchParams.get("q")?.toLowerCase().trim() ?? "";
 
     let results = dummyFoods;
 
-    // 検索クエリ対応（nameのみ）
-    if (q) {
-      results = results.filter((food) => food.name.toLowerCase().includes(q));
+    if (category && tab === "history") {
+      results = results.filter((food) => {
+        const categories = (Array.isArray(food.recordedCategories)
+          ? food.recordedCategories
+          : []
+        ).map((cat: unknown) => toLowerString(cat));
+        return categories.includes(category);
+      });
     }
-    // カテゴリ対応（recordedCategoriesのみ）
-    if (category) {
+
+    if (q) {
       results = results.filter((food) =>
-        food.recordedCategories
-          .map((cat) => cat.toLowerCase())
-          .includes(category),
+        String(food.name ?? "").toLowerCase().startsWith(q),
       );
     }
 
