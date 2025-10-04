@@ -7,6 +7,7 @@ import mealCategoryReducer from "@/stores/meal/mealCategorySlice";
 import loadingReducer from "@/stores/loading/loadingSlice";
 import searchReducer from "@/stores/input/searchSlice";
 import tabReducer from "@/stores/tab/tabSlice";
+import selectedFoodReducer from "@/stores/food/selectedFoodSlice";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -17,6 +18,8 @@ const rootReducer = combineReducers({
   loading: loadingReducer,
   search: searchReducer,
   tab: tabReducer,
+  selectedFood: selectedFoodReducer,
+
   // 他のreducerもここに追加
 });
 
