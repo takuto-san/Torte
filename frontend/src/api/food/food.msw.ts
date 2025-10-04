@@ -11,24 +11,25 @@ export const getFoodControllerSearchFoodsMockHandler = (
   return http.get("*/food/search", async (info) => {
     await delay(1000);
 
-    // グローバルなURLコンストラクタを使う（import不要）
     const urlObj = new URL(info.request.url);
 
-    const q = urlObj.searchParams.get("q")?.toLowerCase() ?? "";
+    const tab = urlObj.searchParams.get("tab")?.toLowerCase() ?? "";
     const category = urlObj.searchParams.get("category")?.toLowerCase() ?? "";
+    const q = urlObj.searchParams.get("q")?.toLowerCase().trim() ?? "";
 
     let results = dummyFoods;
 
-    // 検索クエリ対応（nameのみ）
-    if (q) {
-      results = results.filter((food) => food.name.toLowerCase().includes(q));
-    }
-    // カテゴリ対応（recordedCategoriesのみ）
-    if (category) {
+    if (category && tab === "history") {
       results = results.filter((food) =>
-        food.recordedCategories
-          .map((cat) => cat.toLowerCase())
+        (food.recordedCategories ?? [])
+          .map((cat: any) => String(cat).toLowerCase())
           .includes(category),
+      );
+    }
+
+    if (q) {
+      results = results.filter((food) =>
+        (String(food.name ?? "").toLowerCase()).startsWith(q),
       );
     }
 
