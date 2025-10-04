@@ -1,6 +1,8 @@
 import { HttpResponse, delay, http } from "msw";
 import { dummyFoods } from "@/utils/dummy";
 
+const toLowerString = (value: unknown): string => String(value).toLowerCase();
+
 export const getFoodControllerSearchFoodsMockHandler = (
   overrideResponse?:
     | null
@@ -20,16 +22,18 @@ export const getFoodControllerSearchFoodsMockHandler = (
     let results = dummyFoods;
 
     if (category && tab === "history") {
-      results = results.filter((food) =>
-        (food.recordedCategories ?? [])
-          .map((cat: any) => String(cat).toLowerCase())
-          .includes(category),
-      );
+      results = results.filter((food) => {
+        const categories = (Array.isArray(food.recordedCategories)
+          ? food.recordedCategories
+          : []
+        ).map((cat: unknown) => toLowerString(cat));
+        return categories.includes(category);
+      });
     }
 
     if (q) {
       results = results.filter((food) =>
-        (String(food.name ?? "").toLowerCase()).startsWith(q),
+        String(food.name ?? "").toLowerCase().startsWith(q),
       );
     }
 
