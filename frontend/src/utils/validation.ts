@@ -7,9 +7,7 @@ export const isFood = (v: unknown): v is Food => {
   if (!isPlainObject(v)) return false;
   const id = v.id as unknown;
   const name = v.name as unknown;
-  const idOk =
-    typeof id === "string" ||
-    typeof id === "number"; 
+  const idOk = typeof id === "string" || typeof id === "number";
   const nameOk = typeof name === "string";
   return idOk && nameOk;
 };
