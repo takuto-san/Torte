@@ -1,15 +1,16 @@
-// APIモック（food）
 import { HttpResponse, delay, http } from "msw";
 import { dummyFoods } from "@/utils/dummy";
 
 const toLowerString = (value: unknown): string => String(value).toLowerCase();
+
+type HandlerInfo = Parameters<Parameters<typeof http.get>[1]>[0];
 
 // GET /food/search
 export const getFoodControllerSearchFoodsMockHandler = (
   overrideResponse?:
     | null
     | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
+        info: HandlerInfo,
       ) => Promise<null> | null),
 ) => {
   return http.get("*/food/search", async (info) => {
@@ -30,10 +31,10 @@ export const getFoodControllerSearchFoodsMockHandler = (
         if (idsParam.trim() !== "") {
           const ids: number[] = idsParam
             .split(",")
-            .map(s => Number(s.trim()))
-            .filter(n => Number.isFinite(n));
+            .map((s) => Number(s.trim()))
+            .filter((n): n is number => Number.isFinite(n));
 
-          const findById = (id: number | string) =>
+          const findById = (id: number | string): typeof dummyFoods[number] | undefined =>
             dummyFoods.find((f) => String(f.id) === String(id));
 
           const filtered = ids
@@ -82,7 +83,7 @@ export const getFoodControllerSearchFoodsMockHandler = (
 
 // POST /food/submit
 export const postFoodControllerSubmitMockHandler = (
-  overrideResponse?: null | ((info: any) => Promise<null> | null),
+  overrideResponse?: null | ((info: HandlerInfo) => Promise<null> | null),
 ) => {
   return http.post("*/food/submit", async (info) => {
     await delay(500);
@@ -90,16 +91,16 @@ export const postFoodControllerSubmitMockHandler = (
     let body: unknown;
     try {
       body = await info.request.json();
-    } catch (e) {
+    } catch (_e) {
       return HttpResponse.json({ message: "invalid json" }, { status: 400 });
     }
 
-    const ids =
-      body &&
-      typeof body === "object" &&
-      Array.isArray((body as any).ids)
-        ? (body as any).ids.map((v: unknown) => Number(v)).filter(Number.isFinite)
-        : [];
+    // ボディの安全なパース
+    const parsed = (body && typeof body === "object") ? (body as { ids?: unknown }) : { ids: undefined };
+    const rawIds = Array.isArray(parsed.ids) ? parsed.ids : [];
+    const ids = rawIds
+      .map((v: unknown) => Number(v))
+      .filter((n): n is number => Number.isFinite(n));
 
     if (!ids || ids.length === 0) {
       return HttpResponse.json(
@@ -109,7 +110,7 @@ export const postFoodControllerSubmitMockHandler = (
     }
 
     const existingIds = new Set(dummyFoods.map((f) => Number(f.id)));
-    const invalidIds = ids.filter((id: number | string) => !existingIds.has(Number(id)));
+    const invalidIds = ids.filter((id) => !existingIds.has(Number(id)));
 
     if (typeof overrideResponse === "function") {
       const custom = await overrideResponse(info);
@@ -117,7 +118,6 @@ export const postFoodControllerSubmitMockHandler = (
     }
 
     if (invalidIds.length > 0) {
-
       return HttpResponse.json(
         { message: "some ids are invalid", invalidIds },
         { status: 400 },

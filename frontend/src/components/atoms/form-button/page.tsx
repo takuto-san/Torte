@@ -20,21 +20,21 @@ export const FormButton: React.FC<FormButtonProps> = ({
   const indicatorNode =
     loadingIndicator ?? <CircularProgress size={20} color="inherit" />;
 
+  const mergedSx: ButtonProps["sx"] = Array.isArray(sx)
+    ? [{ minHeight: 40, position: "relative" }, ...sx]
+    : [{ minHeight: 40, position: "relative" }, ...(sx ? [sx] : [])];
+
   return (
     <Box
       position="relative"
       display={buttonProps.fullWidth ? "block" : "inline-block"}
     >
       <Button
-        {...(buttonProps as ButtonProps)}
+        {...buttonProps}
         disabled={isDisabled}
         aria-busy={loading}
         aria-disabled={isDisabled}
-        sx={{
-          minHeight: 40,
-          position: "relative",
-          ...((sx as any) ?? {}),
-        }}
+        sx={mergedSx}
       >
         {showOnlyIndicator ? null : children}
       </Button>

@@ -1,6 +1,4 @@
 import { useSearchQuery } from "@/hooks/useSearchQuery";
-import { useSelector } from "react-redux";
-import { RootState } from "@/lib/stores/store";
 import type { Food } from "@/types/foodTypes";
 import { AddCircleButton } from "@/components/atoms/add-circle-button/page";
 import { isPlainObject, isFoodArray } from "@/utils/validation";
@@ -25,7 +23,6 @@ export const TabContent: React.FC = () => {
 
   const foodList: Food[] = normalizeToFoodList(data);
 
-  const inputText = useSelector((state: RootState) => state.search.value);
 
   return (
     <div className="flex-1 overflow-y-auto">

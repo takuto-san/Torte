@@ -6,15 +6,23 @@ import type { RootState } from "@/lib/stores/store";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 
-export const useSubmitSelected = () => {
+type UseSubmitSelectedResult = {
+  submit: () => Promise<void>;
+  loading: boolean;
+  error: Error | null;
+  selectedCount: number;
+  selectedIds: number[];
+};
+
+export const useSubmitSelected = (): UseSubmitSelectedResult => {
   const selectedIds = useSelector((s: RootState) => s.selectedFood?.ids ?? []);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
   // submit: 選択されたIDをサーバーに送信する
   // Todo: 記録した日付とカテゴリも送信する
-  const submit = useCallback(async () => {
+  const submit = useCallback(async (): Promise<void> => {
     if (!selectedIds || selectedIds.length === 0) return;
 
     setLoading(true);
@@ -33,8 +41,9 @@ export const useSubmitSelected = () => {
       }
 
       return;
-    } catch (err: any) {
-      setError(err instanceof Error ? err : new Error(String(err)));
+    } catch (e: unknown) {
+      const err = e instanceof Error ? e : new Error(String(e ?? "Unknown error"));
+      setError(err);
       throw err;
     } finally {
       setLoading(false);

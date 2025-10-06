@@ -15,7 +15,6 @@ import { useSubmitSelected } from "@/hooks/useSubmitSelected";
 export const SubmitSelectedButton: React.FC<{
   confirmMessage?: string;
 }> = ({ confirmMessage = "選択されたアイテムを送信しますか？" }) => {
-
   const { submit, loading, error, selectedCount } = useSubmitSelected();
   const [open, setOpen] = useState(false);
   const [internalError, setInternalError] = useState<string | null>(null);
@@ -27,18 +26,27 @@ export const SubmitSelectedButton: React.FC<{
   }, [selectedCount]);
 
   const closeConfirm = useCallback(() => {
-    if (loading) return; 
+    if (loading) return;
     setOpen(false);
     setInternalError(null);
   }, [loading]);
+
+  const extractErrorMessage = (e: unknown): string =>
+    e instanceof Error
+      ? e.message
+      : typeof e === "string"
+      ? e
+      : e && typeof e === "object" && typeof (e as Record<string, unknown>)?.message === "string"
+      ? (e as Record<string, string>).message
+      : "送信に失敗しました";
 
   const handleSubmit = useCallback(async () => {
     setInternalError(null);
     try {
       await submit();
       setOpen(false);
-    } catch (err: any) {
-      setInternalError(err?.message ?? "送信に失敗しました");
+    } catch (err: unknown) {
+      setInternalError(extractErrorMessage(err));
     }
   }, [submit]);
 
