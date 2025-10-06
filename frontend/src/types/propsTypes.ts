@@ -40,3 +40,7 @@ export type MealCardProps = {
   isSelected: boolean;
   onToggle: () => void;
 };
+
+export type AddCircleButtonProps = {
+  id: number;
+};
