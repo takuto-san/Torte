@@ -3,23 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/lib/stores/store";
 import type { Food } from "@/types/foodTypes";
 import { AddCircleButton } from "@/components/atoms/add-circle-button/page";
+import { isPlainObject, isFoodArray } from "@/utils/validation";
 
-const isPlainObject = (v: unknown): v is Record<string, unknown> =>
-  typeof v === "object" && v !== null;
-
-const isFood = (v: unknown): v is Food => {
-  if (!isPlainObject(v)) return false;
-  const id = v.id as unknown;
-  const name = v.name as unknown;
-  const idOk =
-    typeof id === "string" ||
-    typeof id === "number"; 
-  const nameOk = typeof name === "string";
-  return idOk && nameOk;
-};
-
-const isFoodArray = (v: unknown): v is Food[] =>
-  Array.isArray(v) && v.every(isFood);
 
 const normalizeToFoodList = (input: unknown): Food[] => {
   if (isFoodArray(input)) return input;
@@ -45,16 +30,18 @@ export const TabContent: React.FC = () => {
   return (
     <div className="flex-1 overflow-y-auto">
       <div className="mb-2">
-        {isLoading && (
-          <div className="flex items-center justify-center min-h-[40vh] text-gray-500">
-            <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-transparent" />
-            検索中...
-          </div>
-        )}
-        {error && <div>エラーが発生しました</div>}
-        {!isLoading && foodList.length === 0 ? (
-          <div className="flex items-center justify-center h-32 text-muted-foreground">
-            検索結果はありません
+        {isLoading || error || (!isLoading && foodList.length === 0) ? (
+          <div className="flex min-h-[40vh] items-center justify-center text-gray-500">
+            {isLoading ? (
+              <>
+                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-transparent" />
+                検索中...
+              </>
+            ) : error ? (
+              <>エラーが発生しました</>
+            ) : (
+              <>検索結果はありません</>
+            )}
           </div>
         ) : (
           <ul>
@@ -70,7 +57,7 @@ export const TabContent: React.FC = () => {
                     {food.nutrition?.calories ?? "-"} kcal
                   </div>
                   <div className="ml-1 shrink-0">
-                    <AddCircleButton aria-label={`${food.name} を追加`} />
+                    <AddCircleButton id={food.id} aria-label={`${food.name} を追加`} />
                   </div>
                 </div>
               </li>

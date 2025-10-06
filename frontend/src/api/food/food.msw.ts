@@ -18,20 +18,52 @@ export const getFoodControllerSearchFoodsMockHandler = (
     const tab = urlObj.searchParams.get("tab")?.toLowerCase() ?? "";
     const category = urlObj.searchParams.get("category")?.toLowerCase() ?? "";
     const q = urlObj.searchParams.get("q")?.toLowerCase().trim() ?? "";
+    const idsParam = urlObj.searchParams.get("ids") ?? "";
 
     let results = dummyFoods;
+    let handledSelectWithIds = false;
 
-    if (category && tab === "history") {
-      results = results.filter((food) => {
-        const categories = (Array.isArray(food.recordedCategories)
-          ? food.recordedCategories
-          : []
-        ).map((cat: unknown) => toLowerString(cat));
-        return categories.includes(category);
-      });
+    switch (tab) {
+      case "select": {
+        if (idsParam.trim() !== "") {
+          const ids: number[] = idsParam
+            .split(",")
+            .map(s => Number(s.trim()))
+            .filter(n => Number.isFinite(n));
+
+          const findById = (id: number | string) =>
+            dummyFoods.find((f) => String(f.id) === String(id));
+
+          const filtered = ids
+            .map((id) => findById(id))
+            .filter((f): f is typeof dummyFoods[number] => f !== undefined);
+
+          results = filtered;
+          handledSelectWithIds = true;
+        }
+        break;
+      }
+
+      case "history": {
+        if (category) {
+          results = results.filter((food) => {
+            const categories = (Array.isArray(food.recordedCategories)
+              ? food.recordedCategories
+              : []
+            ).map((cat: unknown) => toLowerString(cat));
+            return categories.includes(category);
+          });
+        }
+        break;
+      }
+
+      case "search":
+      default: {
+        break;
+      }
     }
 
-    if (q) {
+    if (!handledSelectWithIds && q) {
       results = results.filter((food) =>
         String(food.name ?? "").toLowerCase().startsWith(q),
       );

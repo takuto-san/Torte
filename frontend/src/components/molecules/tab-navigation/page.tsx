@@ -11,8 +11,12 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import CheckIcon from "@mui/icons-material/Check";
 
 export const TabNavigation = () => {
-  const value = useSelector((state: RootState) => state.tab.currentTab);
+  const selectedTab = useSelector((state: RootState) => state.tab.currentTab);
+  const selectedFoodCount = useSelector(
+    (state: RootState) => state.selectedFood?.ids?.length ?? 0
+  );
   const dispatch = useDispatch();
+
 
   const handleChange = (event: React.SyntheticEvent, tabIndex: number) => {
     dispatch(setCurrentTab(tabIndex));
@@ -21,7 +25,7 @@ export const TabNavigation = () => {
   return (
     <Box>
       <Tabs
-        value={value}
+        value={selectedTab}
         onChange={handleChange}
         aria-label="icon label tabs"
         centered
@@ -31,7 +35,8 @@ export const TabNavigation = () => {
           icon={
             <Badge
               color="primary"
-              badgeContent={3}
+              badgeContent={selectedFoodCount}
+              invisible={selectedFoodCount === 0}
               sx={{
                 "& .MuiBadge-badge": {
                   right: -3,
