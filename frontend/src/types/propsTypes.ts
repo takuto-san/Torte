@@ -40,3 +40,15 @@ export type MealCardProps = {
   isSelected: boolean;
   onToggle: () => void;
 };
+
+export type AddCircleButtonProps = {
+  id: number;
+};
+
+export type FormButtonProps = {
+  loading?: boolean;
+  hideChildrenOnLoading?: boolean;
+  loadingIndicator?: React.ReactNode;
+  replaceChildrenOnLoading?: boolean;
+  overlay?: boolean;
+} & ButtonProps;
