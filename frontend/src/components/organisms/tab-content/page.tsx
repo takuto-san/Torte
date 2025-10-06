@@ -3,7 +3,6 @@ import type { Food } from "@/types/foodTypes";
 import { AddCircleButton } from "@/components/atoms/add-circle-button/page";
 import { isPlainObject, isFoodArray } from "@/utils/validation";
 
-
 const normalizeToFoodList = (input: unknown): Food[] => {
   if (isFoodArray(input)) return input;
 
@@ -22,7 +21,6 @@ export const TabContent: React.FC = () => {
   const { data, isLoading, error } = useSearchQuery();
 
   const foodList: Food[] = normalizeToFoodList(data);
-
 
   return (
     <div className="flex-1 overflow-y-auto">
@@ -54,7 +52,10 @@ export const TabContent: React.FC = () => {
                     {food.nutrition?.calories ?? "-"} kcal
                   </div>
                   <div className="ml-1 shrink-0">
-                    <AddCircleButton id={food.id} aria-label={`${food.name} を追加`} />
+                    <AddCircleButton
+                      id={food.id}
+                      aria-label={`${food.name} を追加`}
+                    />
                   </div>
                 </div>
               </li>

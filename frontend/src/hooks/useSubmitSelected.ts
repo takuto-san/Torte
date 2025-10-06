@@ -42,7 +42,8 @@ export const useSubmitSelected = (): UseSubmitSelectedResult => {
 
       return;
     } catch (e: unknown) {
-      const err = e instanceof Error ? e : new Error(String(e ?? "Unknown error"));
+      const err =
+        e instanceof Error ? e : new Error(String(e ?? "Unknown error"));
       setError(err);
       throw err;
     } finally {
@@ -50,5 +51,11 @@ export const useSubmitSelected = (): UseSubmitSelectedResult => {
     }
   }, [selectedIds]);
 
-  return { submit, loading, error, selectedCount: selectedIds.length, selectedIds };
+  return {
+    submit,
+    loading,
+    error,
+    selectedCount: selectedIds.length,
+    selectedIds,
+  };
 };

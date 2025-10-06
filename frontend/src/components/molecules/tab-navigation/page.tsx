@@ -13,10 +13,9 @@ import CheckIcon from "@mui/icons-material/Check";
 export const TabNavigation = () => {
   const selectedTab = useSelector((state: RootState) => state.tab.currentTab);
   const selectedFoodCount = useSelector(
-    (state: RootState) => state.selectedFood?.ids?.length ?? 0
+    (state: RootState) => state.selectedFood?.ids?.length ?? 0,
   );
   const dispatch = useDispatch();
-
 
   const handleChange = (event: React.SyntheticEvent, tabIndex: number) => {
     dispatch(setCurrentTab(tabIndex));

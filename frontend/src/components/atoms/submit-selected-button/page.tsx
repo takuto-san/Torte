@@ -35,10 +35,12 @@ export const SubmitSelectedButton: React.FC<{
     e instanceof Error
       ? e.message
       : typeof e === "string"
-      ? e
-      : e && typeof e === "object" && typeof (e as Record<string, unknown>)?.message === "string"
-      ? (e as Record<string, string>).message
-      : "送信に失敗しました";
+        ? e
+        : e &&
+            typeof e === "object" &&
+            typeof (e as Record<string, unknown>)?.message === "string"
+          ? (e as Record<string, string>).message
+          : "送信に失敗しました";
 
   const handleSubmit = useCallback(async () => {
     setInternalError(null);
@@ -94,7 +96,12 @@ export const SubmitSelectedButton: React.FC<{
           <Button onClick={closeConfirm} disabled={loading}>
             キャンセル
           </Button>
-          <FormButton onClick={handleSubmit} loading={loading} variant="contained" color="primary">
+          <FormButton
+            onClick={handleSubmit}
+            loading={loading}
+            variant="contained"
+            color="primary"
+          >
             送信する
           </FormButton>
         </DialogActions>

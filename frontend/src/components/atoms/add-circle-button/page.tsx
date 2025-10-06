@@ -10,7 +10,7 @@ import { AddCircleButtonProps } from "@/types/propsTypes";
 export const AddCircleButton: React.FC<AddCircleButtonProps> = ({ id }) => {
   const dispatch = useDispatch();
   const isSelected = useSelector((state: RootState) =>
-    state.selectedFood.ids.includes(id)
+    state.selectedFood.ids.includes(id),
   );
 
   const handleToggle = useCallback(() => {
@@ -29,7 +29,11 @@ export const AddCircleButton: React.FC<AddCircleButtonProps> = ({ id }) => {
       onClick={handleToggle}
       sx={{ width: 48, height: 48 }}
     >
-      {isSelected ? <CheckCircleIcon fontSize="large" /> : <AddCircleIcon fontSize="large" />}
+      {isSelected ? (
+        <CheckCircleIcon fontSize="large" />
+      ) : (
+        <AddCircleIcon fontSize="large" />
+      )}
     </IconButton>
   );
 };

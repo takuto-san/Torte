@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 export type SelectedFoodState = {
   ids: number[];
 };
@@ -25,14 +24,11 @@ const selectedFoodSlice = createSlice({
 
     clearFood: (state) => {
       state.ids = [];
-    }
+    },
   },
 });
 
-export const {
-  selectFood,
-  unselectFood,
-  clearFood,
-} = selectedFoodSlice.actions;
+export const { selectFood, unselectFood, clearFood } =
+  selectedFoodSlice.actions;
 
 export default selectedFoodSlice.reducer;

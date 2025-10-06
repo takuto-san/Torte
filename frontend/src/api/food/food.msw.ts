@@ -7,11 +7,7 @@ type HandlerInfo = Parameters<Parameters<typeof http.get>[1]>[0];
 
 // GET /food/search
 export const getFoodControllerSearchFoodsMockHandler = (
-  overrideResponse?:
-    | null
-    | ((
-        info: HandlerInfo,
-      ) => Promise<null> | null),
+  overrideResponse?: null | ((info: HandlerInfo) => Promise<null> | null),
 ) => {
   return http.get("*/food/search", async (info) => {
     await delay(1000);
@@ -34,12 +30,14 @@ export const getFoodControllerSearchFoodsMockHandler = (
             .map((s) => Number(s.trim()))
             .filter((n): n is number => Number.isFinite(n));
 
-          const findById = (id: number | string): typeof dummyFoods[number] | undefined =>
+          const findById = (
+            id: number | string,
+          ): (typeof dummyFoods)[number] | undefined =>
             dummyFoods.find((f) => String(f.id) === String(id));
 
           const filtered = ids
             .map((id) => findById(id))
-            .filter((f): f is typeof dummyFoods[number] => f !== undefined);
+            .filter((f): f is (typeof dummyFoods)[number] => f !== undefined);
 
           results = filtered;
           handledSelectWithIds = true;
@@ -50,9 +48,10 @@ export const getFoodControllerSearchFoodsMockHandler = (
       case "history": {
         if (category) {
           results = results.filter((food) => {
-            const categories = (Array.isArray(food.recordedCategories)
-              ? food.recordedCategories
-              : []
+            const categories = (
+              Array.isArray(food.recordedCategories)
+                ? food.recordedCategories
+                : []
             ).map((cat: unknown) => toLowerString(cat));
             return categories.includes(category);
           });
@@ -68,7 +67,9 @@ export const getFoodControllerSearchFoodsMockHandler = (
 
     if (!handledSelectWithIds && q) {
       results = results.filter((food) =>
-        String(food.name ?? "").toLowerCase().startsWith(q),
+        String(food.name ?? "")
+          .toLowerCase()
+          .startsWith(q),
       );
     }
 
@@ -96,17 +97,17 @@ export const postFoodControllerSubmitMockHandler = (
     }
 
     // ボディの安全なパース
-    const parsed = (body && typeof body === "object") ? (body as { ids?: unknown }) : { ids: undefined };
+    const parsed =
+      body && typeof body === "object"
+        ? (body as { ids?: unknown })
+        : { ids: undefined };
     const rawIds = Array.isArray(parsed.ids) ? parsed.ids : [];
     const ids = rawIds
       .map((v: unknown) => Number(v))
       .filter((n): n is number => Number.isFinite(n));
 
     if (!ids || ids.length === 0) {
-      return HttpResponse.json(
-        { message: "ids is required" },
-        { status: 400 },
-      );
+      return HttpResponse.json({ message: "ids is required" }, { status: 400 });
     }
 
     const existingIds = new Set(dummyFoods.map((f) => Number(f.id)));

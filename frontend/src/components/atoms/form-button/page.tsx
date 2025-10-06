@@ -17,8 +17,9 @@ export const FormButton: React.FC<FormButtonProps> = ({
 }) => {
   const isDisabled = Boolean(disabled) || loading;
   const showOnlyIndicator = replaceChildrenOnLoading || hideChildrenOnLoading;
-  const indicatorNode =
-    loadingIndicator ?? <CircularProgress size={20} color="inherit" />;
+  const indicatorNode = loadingIndicator ?? (
+    <CircularProgress size={20} color="inherit" />
+  );
 
   const mergedSx: ButtonProps["sx"] = Array.isArray(sx)
     ? [{ minHeight: 40, position: "relative" }, ...sx]

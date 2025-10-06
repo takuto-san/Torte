@@ -19,7 +19,9 @@ export const useSearchQuery = () => {
     (state: RootState) => state.mealCategory.selectedCategory,
   );
   const searchValue = useSelector((state: RootState) => state.search.value);
-  const selectedIds = useSelector((state: RootState) => state.selectedFood?.ids ?? []);
+  const selectedIds = useSelector(
+    (state: RootState) => state.selectedFood?.ids ?? [],
+  );
 
   const tabName = tabTypeMap[selectedTabId];
 
@@ -36,7 +38,9 @@ export const useSearchQuery = () => {
         case 0: {
           if (!selectedIds || selectedIds.length === 0) return [];
 
-          const idsParam = selectedIds.map((id) => encodeURIComponent(String(id))).join(",");
+          const idsParam = selectedIds
+            .map((id) => encodeURIComponent(String(id)))
+            .join(",");
           const endpoint = `${API_BASE_URL}/food/search?tab=select&ids=${idsParam}`;
 
           const res = await fetch(endpoint);
@@ -48,7 +52,8 @@ export const useSearchQuery = () => {
         // HISTORY
         case 1: {
           let endpoint = `${API_BASE_URL}/food/search?tab=history`;
-          if (selectedCategory) endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
+          if (selectedCategory)
+            endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
           if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;
 
           const res = await fetch(endpoint);
@@ -59,7 +64,8 @@ export const useSearchQuery = () => {
 
         case 2: {
           let endpoint = `${API_BASE_URL}/food/search?tab=search`;
-          if (selectedCategory) endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
+          if (selectedCategory)
+            endpoint += `&category=${encodeURIComponent(selectedCategory)}`;
           if (searchValue) endpoint += `&q=${encodeURIComponent(searchValue)}`;
 
           const res = await fetch(endpoint);
