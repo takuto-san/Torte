@@ -1,8 +1,10 @@
+// APIモック（food）
 import { HttpResponse, delay, http } from "msw";
 import { dummyFoods } from "@/utils/dummy";
 
 const toLowerString = (value: unknown): string => String(value).toLowerCase();
 
+// GET /food/search
 export const getFoodControllerSearchFoodsMockHandler = (
   overrideResponse?:
     | null
@@ -78,4 +80,55 @@ export const getFoodControllerSearchFoodsMockHandler = (
   });
 };
 
-export const getFoodMock = () => [getFoodControllerSearchFoodsMockHandler()];
+// POST /food/submit
+export const postFoodControllerSubmitMockHandler = (
+  overrideResponse?: null | ((info: any) => Promise<null> | null),
+) => {
+  return http.post("*/food/submit", async (info) => {
+    await delay(500);
+
+    let body: unknown;
+    try {
+      body = await info.request.json();
+    } catch (e) {
+      return HttpResponse.json({ message: "invalid json" }, { status: 400 });
+    }
+
+    const ids =
+      body &&
+      typeof body === "object" &&
+      Array.isArray((body as any).ids)
+        ? (body as any).ids.map((v: unknown) => Number(v)).filter(Number.isFinite)
+        : [];
+
+    if (!ids || ids.length === 0) {
+      return HttpResponse.json(
+        { message: "ids is required" },
+        { status: 400 },
+      );
+    }
+
+    const existingIds = new Set(dummyFoods.map((f) => Number(f.id)));
+    const invalidIds = ids.filter((id: number | string) => !existingIds.has(Number(id)));
+
+    if (typeof overrideResponse === "function") {
+      const custom = await overrideResponse(info);
+      if (custom) return custom;
+    }
+
+    if (invalidIds.length > 0) {
+
+      return HttpResponse.json(
+        { message: "some ids are invalid", invalidIds },
+        { status: 400 },
+      );
+    }
+
+    return HttpResponse.json({ success: true }, { status: 200 });
+  });
+};
+
+export const getFoodMock = () => [
+  getFoodControllerSearchFoodsMockHandler(),
+  postFoodControllerSubmitMockHandler(),
+];

@@ -44,3 +44,11 @@ export type MealCardProps = {
 export type AddCircleButtonProps = {
   id: number;
 };
+
+export type FormButtonProps = {
+  loading?: boolean;
+  hideChildrenOnLoading?: boolean;
+  loadingIndicator?: React.ReactNode;
+  replaceChildrenOnLoading?: boolean;
+  overlay?: boolean;
+} & ButtonProps;
