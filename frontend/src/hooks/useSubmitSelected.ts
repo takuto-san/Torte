@@ -13,6 +13,7 @@ export const useSubmitSelected = () => {
   const [error, setError] = useState<Error | null>(null);
 
   // submit: 選択されたIDをサーバーに送信する
+  // Todo: 記録した日付とカテゴリも送信する
   const submit = useCallback(async () => {
     if (!selectedIds || selectedIds.length === 0) return;
 

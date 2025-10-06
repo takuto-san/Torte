@@ -22,12 +22,17 @@ const selectedFoodSlice = createSlice({
       const id = action.payload;
       state.ids = state.ids.filter((x) => x !== id);
     },
+
+    clearFood: (state) => {
+      state.ids = [];
+    }
   },
 });
 
 export const {
   selectFood,
   unselectFood,
+  clearFood,
 } = selectedFoodSlice.actions;
 
 export default selectedFoodSlice.reducer;
