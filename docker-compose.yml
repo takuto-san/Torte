@@ -43,8 +43,9 @@ services:
       - "5434:5432" 
     volumes:
       - db-store:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d appdb"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 3s
       retries: 10

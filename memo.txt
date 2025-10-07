@@ -1,0 +1,30 @@
+---
+コンテナに入る
+docker exec -it postgres_pta bash
+
+コンテナ内からpsqlに接続
+psql -U torte -d tortedb
+
+どのユーザー名/DB名で起動しているか確認
+docker inspect -f '{{range .Config.Env}}{{println .}}{{end}}' postgres_pta | grep POSTGRES
+
+
+### コマンド
+コンテナの起動
+docker-compose up -d
+停止
+docker-compose stop
+環境の削除
+docker-compose down
+
+Dockerイメージのビルドとコンテナの起動
+docker-compose up --build
+
+ビルドのみ
+docker-compose build backend
+
+API仕様変更時
+npm run generate:api
+
+コード自動修正
+npx prettier --write .
