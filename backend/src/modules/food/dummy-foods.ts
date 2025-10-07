@@ -1,6 +1,4 @@
-import { Food } from './food.type';
-
-export const dummyFoods: Food[] = [
+export const dummyFoods = [
   {
     id: 1,
     name: 'Spaghetti Carbonara',

@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { dummyFoods } from './dummy-foods';
-import type { SearchParams, MealCategory, Food } from './food.type';
 
 @Injectable()
 export class FoodService {
-  searchFoods(params: SearchParams): Food[] {
+  searchFoods(params) {
     let foods = dummyFoods;
 
     if (params.query) {
@@ -17,7 +16,7 @@ export class FoodService {
       foods = foods.filter(
         (food) =>
           Array.isArray(food.recordedCategories) &&
-          food.recordedCategories.includes(params.category as MealCategory),
+          food.recordedCategories.includes(params.category as string),
       );
     }
 
