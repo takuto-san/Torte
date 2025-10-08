@@ -28,3 +28,8 @@ npm run generate:api
 
 コード自動修正
 npx prettier --write .
+
+
+---
+SQLファイルの実行
+docker-compose exec -T db psql -U torte -d tortedb < db/init/01-schema.sql

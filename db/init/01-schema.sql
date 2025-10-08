@@ -1,8 +1,10 @@
 BEGIN;
 
 -- ENUM types
-CREATE TYPE IF NOT EXISTS public.unit AS ENUM ('g', 'ml', 'piece');
-CREATE TYPE IF NOT EXISTS public.meal_category AS ENUM ('breakfast', 'lunch', 'dinner', 'snack');
+DROP TYPE IF EXISTS public.unit;
+CREATE TYPE public.unit AS ENUM ('g','ml','piece');
+DROP TYPE IF EXISTS public.meal_category;
+CREATE TYPE public.meal_category AS ENUM ('breakfast', 'lunch', 'dinner', 'snack');
 
 -- Master tables
 CREATE TABLE IF NOT EXISTS public.food (
