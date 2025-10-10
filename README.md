@@ -45,7 +45,7 @@ docker-compose stop
 docker-compose down
 
 Dockerイメージのビルドとコンテナの起動
-docker-compose up --build
+docker-compose up --build -d
 
 ビルドのみ
 docker-compose build backend
