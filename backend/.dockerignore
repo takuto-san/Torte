@@ -1,0 +1,28 @@
+# VCS / editor
+.git
+.gitignore
+.DS_Store
+.vscode/
+.idea/
+
+# ビルド成果物（マルチステージで Docker 内でビルドする場合は除外してコンテキストを小さくする）
+target/
+
+# ログ / 一時ファイル
+*.log
+logs/
+tmp/
+*.tmp
+
+# Node 関連（もし frontend ファイル等が混在している場合）
+node_modules
+npm-debug.log
+yarn-error.log
+
+# 環境ファイル / シークレット（ホストの .env を含めない）
+.env
+.env.local
+.env.*.local
+
+# OS 一時ファイル等
+Thumbs.db
