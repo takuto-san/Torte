@@ -55,3 +55,6 @@ npm run generate:api
 
 コード自動修正
 npx prettier --write .
+
+jarファイル作成
+./mvnw clean package -DskipTests
