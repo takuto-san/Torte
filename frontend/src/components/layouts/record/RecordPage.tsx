@@ -5,6 +5,7 @@ import { DateSelector } from "@/components/molecules/date-selector/page";
 import { MealTypeSelector } from "@/components/molecules/meal-type-selector/page";
 import { InputForm } from "@/components/molecules/input-form/page";
 import { TabNavigation } from "@/components/molecules/tab-navigation/page";
+import { RecipeForm } from "@/components/organisms/recipe-form/page";
 
 export const RecordPageLayout = () => {
   return (
@@ -15,6 +16,7 @@ export const RecordPageLayout = () => {
       <InputForm />
       <TabNavigation />
       <TabContent />
+      <RecipeForm />
     </div>
   );
 };

@@ -32,6 +32,7 @@
     "react-dom": "19.1.0",
     "react-redux": "^9.2.0",
     "recharts": "^3.2.1",
+    "sass": "^1.93.2",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
