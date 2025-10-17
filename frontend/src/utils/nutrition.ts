@@ -30,11 +30,11 @@ export function getTotalNutrition(meals: Meal[]): Nutrition {
     (total, meal) => ({
       calories: total.calories + meal.totalNutrition.calories,
       protein: total.protein + meal.totalNutrition.protein,
-      carbohydrates: total.carbohydrates + meal.totalNutrition.carbohydrates,
+      carbs: total.carbs + meal.totalNutrition.carbs,
       fat: total.fat + meal.totalNutrition.fat,
       salt: total.salt + meal.totalNutrition.salt,
     }),
-    { calories: 0, protein: 0, carbohydrates: 0, fat: 0, salt: 0 },
+    { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
   );
 }
 
@@ -181,7 +181,7 @@ export const calculateNutrition = (ingredients: IngredientWithNutrition[]): Nutr
     calories: 0,
     protein: 0,
     fat: 0,
-    carbohydrates: 0,
+    carbs: 0,
     salt: 0,
   };
 
@@ -194,7 +194,7 @@ export const calculateNutrition = (ingredients: IngredientWithNutrition[]): Nutr
       nutrition.calories += Math.floor(ing.nutrition.calories * ratio);
       nutrition.protein += Number((ing.nutrition.protein * ratio).toFixed(1));
       nutrition.fat += Number((ing.nutrition.fat * ratio).toFixed(1));
-      nutrition.carbohydrates += Number((ing.nutrition.carbohydrates * ratio).toFixed(1));
+      nutrition.carbs += Number((ing.nutrition.carbs * ratio).toFixed(1));
       nutrition.salt += Number((ing.nutrition.salt * ratio).toFixed(2));
     }
   });
