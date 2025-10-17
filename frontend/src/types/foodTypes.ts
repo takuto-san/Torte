@@ -27,8 +27,8 @@ export type Meal = {
 export interface Nutrition {
   calories: number;
   protein: number;
+  carbs: number;
   fat: number;
-  carbohydrates: number;
   salt: number;
 }
 

@@ -59,4 +59,4 @@ npx prettier --write .
 jarファイル作成
 ./mvnw clean package -DskipTests
 
-
+psql -U torte -d torte

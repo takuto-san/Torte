@@ -33,7 +33,7 @@ export const HomePageLayout: FC = () => {
   const getNutritionByMealType = (mealType: MealCategory) =>
     dayNutrition && dayNutrition[mealType]
       ? dayNutrition[mealType].totalNutrition
-      : { calories: 0, protein: 0, carbs: 0, fat: 0, carbohydrates: 0, salt: 0 };
+      : { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
