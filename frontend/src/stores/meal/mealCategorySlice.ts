@@ -10,19 +10,19 @@ export const initialState: MealCategoryState = {
   mealsByType: {
     breakfast: {
       meals: [],
-      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
     },
     lunch: {
       meals: [],
-      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
     },
     dinner: {
       meals: [],
-      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
     },
     snack: {
       meals: [],
-      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 },
+      totalNutrition: { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
     },
   },
   selectedCategory: "breakfast",
