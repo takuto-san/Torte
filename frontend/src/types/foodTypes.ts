@@ -24,18 +24,36 @@ export type Meal = {
 };
 
 // 栄養情報
-export type Nutrition = {
+export interface Nutrition {
   calories: number;
   protein: number;
   carbs: number;
   fat: number;
-};
+  salt: number;
+}
 
 // 食品情報
 export type Food = {
   id: number;
   name: string;
+  category: string;
   nutrition: Nutrition;
   image: string;
   recordedCategories: MealCategory[];
 };
+
+// 単位
+export interface Unit {
+  id: number;
+  name: string;
+  description: string;
+  step: number;
+}
+
+export interface IngredientWithNutrition {
+  id: string;
+  name: string;
+  quantity: number;
+  unit: Unit;
+  nutrition: Nutrition;
+}
