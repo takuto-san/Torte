@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC } from "react";
 import { NutritionProgressProps, DailyOverviewProps } from "@/types/propsTypes";
-import { MealCategory } from "@/types/foodTypes";
+import { MealCategory, Nutrition } from "@/types/foodTypes";  // Nutrition型を追加
 import { Weekday } from "@/types/dateTypes";
 
 export const NutritionProgress: FC<NutritionProgressProps> = ({
@@ -42,26 +42,31 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
   nutritionBaselines,
 }) => {
   const categories: MealCategory[] = ["breakfast", "lunch", "dinner", "snack"];
-  const total = categories.reduce(
+  const total = categories.reduce<Nutrition>(
     (sum, cat) => {
       const nutrition = dayNutrition?.[cat]?.totalNutrition ?? {
         calories: 0,
         protein: 0,
         carbs: 0,
         fat: 0,
+        salt: 0,
       };
       return {
         calories: sum.calories + nutrition.calories,
         protein: sum.protein + nutrition.protein,
         carbs: sum.carbs + nutrition.carbs,
+        fat: sum.fat + nutrition.fat,
+        salt: sum.salt + nutrition.salt,
       };
     },
-    { calories: 0, protein: 0, carbs: 0 },
+    { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
   );
 
   const calories = total.calories;
   const protein = total.protein;
   const carbs = total.carbs;
+  const fat = total.fat;
+  const salt = total.salt;
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
@@ -94,7 +99,7 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-5 gap-4">
         <NutritionProgress
           label="Calories"
           current={calories}
@@ -113,6 +118,19 @@ export const DailyOverview: React.FC<DailyOverviewProps> = ({
           current={carbs}
           goal={nutritionBaselines.carbs}
           color="bg-purple-500"
+        />
+        <NutritionProgress
+          label="Fat"
+          current={fat}
+          goal={nutritionBaselines.fat}
+          color="bg-orange-500"
+        />
+        <NutritionProgress
+          label="Salt"
+          current={salt}
+          goal={nutritionBaselines.salt}
+          color="bg-pink-500"
+          unit="g"
         />
       </div>
     </div>

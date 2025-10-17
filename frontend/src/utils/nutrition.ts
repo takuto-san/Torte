@@ -4,6 +4,8 @@ import type {
   WeeklyMeals,
   Nutrition,
   MealCategory,
+  Unit,
+  IngredientWithNutrition,
 } from "@/types/foodTypes";
 import type { Weekday } from "@/types/dateTypes";
 
@@ -30,8 +32,9 @@ export function getTotalNutrition(meals: Meal[]): Nutrition {
       protein: total.protein + meal.totalNutrition.protein,
       carbs: total.carbs + meal.totalNutrition.carbs,
       fat: total.fat + meal.totalNutrition.fat,
+      salt: total.salt + meal.totalNutrition.salt,
     }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 },
+    { calories: 0, protein: 0, carbs: 0, fat: 0, salt: 0 },
   );
 }
 
@@ -121,3 +124,80 @@ export function getMealsByType(
 ): Meal[] {
   return dailyMeals[type]?.meals ?? [];
 }
+
+// 栄養素計算
+export const convertToGrams = (quantity: number, unit: Unit): number => {
+  switch (unit.name) {
+    // 個数系単位
+    case '個':
+    case '本':
+    case '房':
+    case '株':
+    case '袋':
+    case '缶':
+    case '匹':
+    case '尾':
+    case 'パック':
+      return quantity * 100;
+    case '枚':
+      return quantity * 20;
+    case '切れ':
+      return quantity * 50;
+    
+    // 調味料系単位
+    case '小さじ':
+      return quantity * 5;
+    case '大さじ':
+      return quantity * 15;
+    case 'カップ':
+      return quantity * 200;
+    
+    // 質量・容量単位
+    case 'kg':
+      return quantity * 1000;
+    case 'ml':
+      return quantity;
+    case 'L':
+      return quantity * 1000;
+    
+    // その他
+    case '滴':
+      return quantity;
+    case '適量':
+    case '少々':
+      return 0;
+    
+    // すでにgの場合はそのまま
+    case 'g':
+      return quantity;
+    default:
+      console.warn(`未対応の単位: ${unit.name}、gとして計算します`);
+      return quantity;
+  }
+};
+
+export const calculateNutrition = (ingredients: IngredientWithNutrition[]): Nutrition => {
+  const nutrition: Nutrition = {
+    calories: 0,
+    protein: 0,
+    fat: 0,
+    carbs: 0,
+    salt: 0,
+  };
+
+  ingredients.forEach((ing) => {
+    if (ing.nutrition) {
+      const quantityInGrams = convertToGrams(ing.quantity, ing.unit);
+      const ratio = quantityInGrams / 100;
+      
+      // 各栄養素を計算して合計
+      nutrition.calories += Math.floor(ing.nutrition.calories * ratio);
+      nutrition.protein += Number((ing.nutrition.protein * ratio).toFixed(1));
+      nutrition.fat += Number((ing.nutrition.fat * ratio).toFixed(1));
+      nutrition.carbs += Number((ing.nutrition.carbs * ratio).toFixed(1));
+      nutrition.salt += Number((ing.nutrition.salt * ratio).toFixed(2));
+    }
+  });
+
+  return nutrition;
+};
