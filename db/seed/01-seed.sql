@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS staging_json;
-CREATE TEMP TABLE staging_json (data jsonb);
+-- DROP TABLE IF EXISTS staging_json;
+-- CREATE TEMP TABLE staging_json (data jsonb);
 
-\copy staging_json (data) FROM '/tmp/data.ndjson';
+-- \copy staging_json (data) FROM '/tmp/data.ndjson';
 
 BEGIN;
 
