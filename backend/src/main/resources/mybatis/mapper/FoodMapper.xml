@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="torte.mapper.FoodMapper">
+
+  <resultMap id="FoodSearchResult" type="torte.dto.response.FoodSearchResponseDto">
+    <id property="id" column="id" />
+    <result property="name" column="name" />
+    <result property="calories" column="calories" />
+    <result property="protein" column="protein" />
+    <result property="carbs" column="carbs" />
+    <result property="fat" column="fat" />
+    <result property="salt" column="salt" />
+  </resultMap>
+
+  <select id="searchHistory" resultMap="FoodSearchResult" parameterType="map">
+    SELECT f.id,
+           f.name,
+           NULL::numeric AS calories,
+           NULL::numeric AS protein,
+           NULL::numeric AS carbs,
+           NULL::numeric AS fat,
+           NULL::numeric AS salt
+    FROM public.meal_food mf
+    JOIN public.meal m ON mf.meal_id = m.id
+    JOIN public.food f ON mf.food_id = f.id
+    WHERE LOWER(f.name) LIKE LOWER(CONCAT('%', #{q}, '%'))
+    <if test="category != null and category != ''">
+      AND m.category = #{category}
+    </if>
+    GROUP BY f.id, f.name
+    ORDER BY f.name ASC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="searchIngredients" resultMap="FoodSearchResult" parameterType="map">
+    SELECT i.id,
+           i.name,
+           i.calories,
+           i.protein,
+           i.carbs,
+           i.fat,
+           i.salt
+    FROM public.ingredient i
+    WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', #{q}, '%'))
+    ORDER BY i.name ASC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <select id="searchBrands" resultMap="FoodSearchResult" parameterType="map">
+    SELECT b.id,
+           b.name,
+           NULL::numeric AS calories,
+           NULL::numeric AS protein,
+           NULL::numeric AS carbs,
+           NULL::numeric AS fat,
+           NULL::numeric AS salt
+    FROM public.brand b
+    WHERE LOWER(b.name) LIKE LOWER(CONCAT('%', #{q}, '%'))
+    ORDER BY b.name ASC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+  <!-- Todo: SQLクエリの修正 -->
+  <select id="searchRecipes" resultMap="FoodSearchResult" parameterType="map">
+    SELECT r.id,
+           r.name,
+           NULL::numeric AS calories,
+           NULL::numeric AS protein,
+           NULL::numeric AS carbs,
+           NULL::numeric AS fat,
+           NULL::numeric AS salt
+    FROM public.recipe r
+    WHERE LOWER(r.name) LIKE LOWER(CONCAT('%', #{q}, '%'))
+    ORDER BY r.name ASC
+    LIMIT #{limit} OFFSET #{offset}
+  </select>
+
+</mapper>

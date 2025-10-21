@@ -1,6 +1,5 @@
 package torte.service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,7 +24,7 @@ public class FoodService {
 
     public List<FoodSearchResponseDto> search(FoodSearchRequestDto req) {
         if (req == null) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         String q = req.getQ();
@@ -33,7 +32,7 @@ public class FoodService {
         String category = req.getCategory();
 
         if (!StringUtils.hasText(q)) {
-            return Collections.emptyList();
+            return List.of();
         }
 
         if (Integer.valueOf(1).equals(tab)) {
