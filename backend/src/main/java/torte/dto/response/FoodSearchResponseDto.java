@@ -1,4 +1,4 @@
-package torte.dto;
+package torte.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Schema(description = "食品情報")
-public class FoodDto {
+public class FoodSearchResponseDto {
     @Schema(description = "ID", example = "123")
     private Long id;
 
