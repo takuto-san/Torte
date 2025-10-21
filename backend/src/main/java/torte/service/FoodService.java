@@ -1,17 +1,21 @@
 package torte.service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import torte.dto.FoodDto;
+import torte.dto.request.FoodSearchRequestDto;
+import torte.dto.response.FoodSearchResponseDto;
 import torte.repository.FoodRepository;
 
 @Service
-public class FoodService{
+public class FoodService {
 
     private final FoodRepository repo;
 
@@ -19,32 +23,30 @@ public class FoodService{
         this.repo = repo;
     }
 
-    public List<FoodDto> search(String q, Integer tab, Optional<String> category) {
+    public List<FoodSearchResponseDto> search(FoodSearchRequestDto req) {
+        if (req == null) {
+            return Collections.emptyList();
+        }
+
+        String q = req.getQ();
+        Integer tab = req.getTab();
+        String category = req.getCategory();
+
         if (!StringUtils.hasText(q)) {
-            return List.of();
+            return Collections.emptyList();
         }
 
-        if (tab == 1) {
-            return repo.searchHistory(q, category);
-        } else {
-            List<FoodDto> results = new ArrayList<>();
-
-            List<FoodDto> ingredientResults = repo.searchIngredients(q);
-            if (ingredientResults != null && !ingredientResults.isEmpty()) {
-                results.addAll(ingredientResults);
-            }
-
-            List<FoodDto> brandResults = repo.searchBrands(q);
-            if (brandResults != null && !brandResults.isEmpty()) {
-                results.addAll(brandResults);
-            }
-
-            List<FoodDto> recipeResults = repo.searchRecipes(q);
-            if (recipeResults != null && !recipeResults.isEmpty()) {
-                results.addAll(recipeResults);
-            }
-
-            return results;
+        if (Integer.valueOf(1).equals(tab)) {
+            return repo.searchHistory(q, Optional.ofNullable(category));
         }
+
+        return Stream.of(
+                    repo.searchIngredients(q),
+                    repo.searchBrands(q),
+                    repo.searchRecipes(q)
+                )
+                .filter(Objects::nonNull)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }

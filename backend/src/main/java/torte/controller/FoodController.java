@@ -1,21 +1,25 @@
 package torte.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import torte.dto.FoodDto;
+import jakarta.validation.Valid;
+import torte.dto.request.FoodSearchRequestDto; 
+import torte.dto.response.FoodSearchResponseDto;
 import torte.service.FoodService;
 
 @RestController
@@ -30,26 +34,27 @@ public class FoodController {
 
     @Operation(
         summary = "食品を検索する",
-        description = "q にマッチする食品・ブランド・レシピ・履歴を検索します。tab=1 のときは履歴検索。",
+        description = "検索クエリと一致する食品を取得するAPI。tab=1 のときは履歴検索。",
         responses = {
             @ApiResponse(
                 responseCode = "200",
                 description = "検索結果一覧",
-                content = @Content(array = @ArraySchema(schema = @Schema(implementation = FoodDto.class)))
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = FoodSearchResponseDto.class)))
             )
         }
     )
-    public @GetMapping("/search")
-    List<FoodDto> search(
-            @Parameter(in = ParameterIn.QUERY, description = "検索クエリ", example = "apple")
-            @RequestParam(value = "q", defaultValue = "") String q,
-
-            @Parameter(in = ParameterIn.QUERY, description = "タブ (0=all, 1=history)", example = "0")
-            @RequestParam(value = "tab") Integer tab,
-
-            @Parameter(in = ParameterIn.QUERY, description = "カテゴリフィルタ (任意)", example = "lunch")
-            @RequestParam(value = "category", required = false) String category
+    @GetMapping("/search")
+    public List<FoodSearchResponseDto> search(
+            @Valid @ModelAttribute FoodSearchRequestDto req,
+            BindingResult bindingResult
     ) {
-        return service.search(q, tab, Optional.ofNullable(category));
+        if (bindingResult.hasErrors()) {
+            String msg = bindingResult.getAllErrors().stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.joining("; "));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, msg);
+        }
+
+        return service.search(req);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import torte.dto.FoodDto;
+import torte.dto.response.FoodSearchResponseDto;
 
 @Repository
 public class FoodRepository {
@@ -24,7 +24,7 @@ public class FoodRepository {
     }
 
     // Food
-    public List<FoodDto> searchHistory(String q, Optional<String> category) {
+    public List<FoodSearchResponseDto> searchHistory(String q, Optional<String> category) {
         if (q == null || q.isBlank()) return List.of();
 
         String pattern = "%" + q + "%";
@@ -48,12 +48,11 @@ public class FoodRepository {
            .append("ORDER BY f.name ASC ")
            .append("LIMIT ").append(DEFAULT_LIMIT).append(" OFFSET ").append(DEFAULT_OFFSET);
 
-        // deprecated 回避: query(sql, rowMapper, args...)
         return jdbc.query(sql.toString(), foodRowMapper(), params.toArray());
     }
 
     // Ingredient
-    public List<FoodDto> searchIngredients(String q) {
+    public List<FoodSearchResponseDto> searchIngredients(String q) {
         if (q == null || q.isBlank()) return List.of();
         String pattern = "%" + q + "%";
 
@@ -68,7 +67,7 @@ public class FoodRepository {
     }
 
     // Brand
-    public List<FoodDto> searchBrands(String q) {
+    public List<FoodSearchResponseDto> searchBrands(String q) {
         if (q == null || q.isBlank()) return List.of();
         String pattern = "%" + q + "%";
 
@@ -83,7 +82,7 @@ public class FoodRepository {
     }
 
     // Recipe
-    public List<FoodDto> searchRecipes(String q) {
+    public List<FoodSearchResponseDto> searchRecipes(String q) {
         if (q == null || q.isBlank()) return List.of();
         String pattern = "%" + q + "%";
 
@@ -97,9 +96,9 @@ public class FoodRepository {
         return jdbc.query(sql, foodRowMapper(), pattern);
     }
 
-    private RowMapper<FoodDto> foodRowMapper() {
+    private RowMapper<FoodSearchResponseDto> foodRowMapper() {
         return (ResultSet rs, int rowNum) -> {
-            FoodDto dto = new FoodDto();
+            FoodSearchResponseDto dto = new FoodSearchResponseDto();
 
             long id = rs.getLong("id");
             if (!rs.wasNull()) dto.setId(id);
