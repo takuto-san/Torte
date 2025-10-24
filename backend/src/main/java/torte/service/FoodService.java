@@ -2,7 +2,6 @@ package torte.service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -11,15 +10,15 @@ import org.springframework.util.StringUtils;
 
 import torte.dto.request.FoodSearchRequestDto;
 import torte.dto.response.FoodSearchResponseDto;
-import torte.repository.FoodRepository;
+import torte.mapper.FoodMapper;
 
 @Service
 public class FoodService {
 
-    private final FoodRepository repo;
+    private final FoodMapper mapper;
 
-    public FoodService(FoodRepository repo) {
-        this.repo = repo;
+    public FoodService(FoodMapper mapper) {
+        this.mapper = mapper;
     }
 
     public List<FoodSearchResponseDto> search(FoodSearchRequestDto req) {
@@ -36,13 +35,13 @@ public class FoodService {
         }
 
         if (Integer.valueOf(1).equals(tab)) {
-            return repo.searchHistory(q, Optional.ofNullable(category));
+            return mapper.searchHistory(q, category);
         }
 
         return Stream.of(
-                    repo.searchIngredients(q),
-                    repo.searchBrands(q),
-                    repo.searchRecipes(q)
+                    mapper.searchIngredients(q),
+                    mapper.searchBrands(q),
+                    mapper.searchRecipes(q)
                 )
                 .filter(Objects::nonNull)
                 .flatMap(List::stream)
