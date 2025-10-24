@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Schema(description = "食品情報")
-public class FoodSearchResponseDto {
+public class FoodResponseDto {
     @Schema(description = "ID", example = "123")
     private Long id;
 

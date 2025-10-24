@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import torte.dto.request.FoodSearchRequestDto; 
-import torte.dto.response.FoodSearchResponseDto;
+import torte.dto.response.FoodResponseDto;
 import torte.service.FoodService;
 
 @RestController
@@ -39,12 +39,12 @@ public class FoodController {
             @ApiResponse(
                 responseCode = "200",
                 description = "検索結果一覧",
-                content = @Content(array = @ArraySchema(schema = @Schema(implementation = FoodSearchResponseDto.class)))
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = FoodResponseDto.class)))
             )
         }
     )
     @GetMapping("/search")
-    public List<FoodSearchResponseDto> search(
+    public List<FoodResponseDto> search(
             @Valid @ModelAttribute FoodSearchRequestDto req,
             BindingResult bindingResult
     ) {

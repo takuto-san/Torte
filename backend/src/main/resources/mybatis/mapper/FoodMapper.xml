@@ -5,7 +5,7 @@
 
 <mapper namespace="torte.mapper.FoodMapper">
   <!-- Foodテーブルから履歴検索 -->
-  <select id="searchHistory" resultType="torte.dto.response.FoodSearchResponseDto">
+  <select id="searchHistory" resultType="torte.dto.response.FoodResponseDto">
     SELECT
       h.id                   AS id,
       h.name                 AS name,
@@ -29,7 +29,7 @@
   </select>
 
   <!-- Ingredientテーブルから食品検索 -->
-  <select id="searchIngredients" resultType="torte.dto.response.FoodSearchResponseDto">
+  <select id="searchIngredients" resultType="torte.dto.response.FoodResponseDto">
     SELECT
       i.id                   AS id,
       i.name                 AS name,
@@ -46,7 +46,7 @@
   </select>
 
   <!-- Brandテーブルから食品検索 -->
-  <select id="searchBrands" resultType="torte.dto.response.FoodSearchResponseDto">
+  <select id="searchBrands" resultType="torte.dto.response.FoodResponseDto">
     SELECT
       b.id                   AS id,
       b.name                 AS name,
@@ -63,7 +63,7 @@
   </select>
 
   <!-- Recipeテーブルから食品検索 -->
-  <select id="searchRecipes" resultType="torte.dto.response.FoodSearchResponseDto">
+  <select id="searchRecipes" resultType="torte.dto.response.FoodResponseDto">
     SELECT
       r.id                   AS id,
       r.name                 AS name,

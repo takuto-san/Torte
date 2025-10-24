@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import torte.dto.request.FoodSearchRequestDto;
-import torte.dto.response.FoodSearchResponseDto;
+import torte.dto.response.FoodResponseDto;
 import torte.mapper.FoodMapper;
 
 @Service
@@ -21,7 +21,7 @@ public class FoodService {
         this.mapper = mapper;
     }
 
-    public List<FoodSearchResponseDto> search(FoodSearchRequestDto req) {
+    public List<FoodResponseDto> search(FoodSearchRequestDto req) {
         if (req == null) {
             return List.of();
         }
