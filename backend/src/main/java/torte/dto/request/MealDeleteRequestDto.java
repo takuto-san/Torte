@@ -1,5 +1,5 @@
 package torte.dto.request;
 
-public class RecordDeleteRequestDto {
+public class MealDeleteRequestDto {
 
 }

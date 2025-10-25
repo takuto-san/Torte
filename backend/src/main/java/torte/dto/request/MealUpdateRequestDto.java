@@ -1,5 +1,5 @@
 package torte.dto.request;
 
-public class RecordUpdateRequestDto {
+public class MealUpdateRequestDto {
 
 }
